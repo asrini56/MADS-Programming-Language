@@ -2,3 +2,4 @@
 
 ### Team Members:
 * Srinivasan Sundar
+* Deepti Paul
