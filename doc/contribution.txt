@@ -1,0 +1,33 @@
+CONTRIBUTION
+Compiler and Virtual Machine for a Programming Language(MADS)
+
+
+Team 12 :-
+Team Members:
+1] Ashwin Srinivasan
+2] Deepti Paul
+3] Madhu Madhavan
+4] Srinivasan Sundar
+
+
+Milestone 1
+Tasks:
+Researched on the language and tools to be used for the project. 
+Understood the project requirements and gathered information for the entire project design.
+Considering our research on the various parsing tools and other project related information, we have identified the best tools and languages for effectively implementing our project, as mentioned below.
+All the members also contributed towards writing the grammar. Finally, named our programming language as MADS.
+
+
+Future plans and tasks to be completed:
+1. Write Grammar for ANTLR in the .g4 format. ( Ashwin Srinivasan, Madhu Madhavan )
+2. Debug and test grammar, fix the edge case issues. Research on tokenizing and generating parse trees.  (  Srinivasan Sundar,   Deepti Paul )
+3. Implement the compiler for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration.  ( Srinivasan Sundar,  Madhu Madhavan, Deepti Paul,  Ashwin Srinivasan )
+4. Implement the runtime for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration.   (  Deepti Paul,  Ashwin Srinivasan)
+5. Bug fixes and documentation.  (  Srinivasan Sundar,  Madhu Madhavan )
+
+
+Future Works:
+* Operator precedence
+* Handling keywords in identifier
+* Support for functions
+* Console input/output or command line args to get user inputs
