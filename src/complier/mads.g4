@@ -77,3 +77,23 @@ forLoop : 'for' Identifier 'in range' '(' NumberValue ',' NumberValue ')' '{' st
 | 'for' '(' initializeStatement ';' conditionStmt ';' unaryExpr ')' '{' statement '}'  ;
 
 printStatement : 'print' '(' Identifier ')' | 'print' '(' String ')' ;
+
+DataType : ('int' | 'float' | 'string' | 'bool');
+
+DataTypeValue : Integer | Float | String | Bool;
+
+LogicalOperator : ( '&' | '| |' );
+RelationalOperator : ('>' | '<' | '>=' | '<=' | '==' | '!=' );
+
+String : '"' [a-zA-Z0-9]* '"';
+
+Digit : [0-9]+;
+Integer : '-' Digit | Digit;
+Float : Digit | Digit '.' Digit | '-' Digit | '-' Digit '.' Digit;
+Bool : ('true' | 'false');
+
+Identifier : [a-z][a-zA-Z0-9_]*; 
+
+NumberValue : Identifier | Digit;
+
+Keyword : ('start' | 'end' | 'int' | 'float' | 'string' | 'bool' | 'for' | 'while' | 'if' | 'else' | 'true' | 'false' | 'print' | 'and' | 'or' |  'not');
