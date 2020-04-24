@@ -1,4 +1,4 @@
-grammar mads;
+grammar MADS;
 
 @header {
 	package antlr;
