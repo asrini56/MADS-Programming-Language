@@ -6,13 +6,14 @@ grammar MADS;
 
 program : 'main' '(' ')' '{' statementList '}';
 
-statementList : statement statementList | statement;
+statementList : statementList statement | statement;
 
 statement: declaration ';'
+| unaryExpr ';'
+| expr ';'
 | printStatement ';'
 | ternaryOperator ';'
 | loopStatement
-| unaryExpr
 ;
 
 declaration : DataType IDENTIFIER
@@ -24,14 +25,14 @@ initializeStatement : DataType IDENTIFIER '=' DataTypeValue
 			| varName = IDENTIFIER '=' expr
 			;
 
-expr : expr_term '+' expr
-| expr_term '-' expr
+expr : expr '+' expr_term
+| expr '-' expr_term
 | expr_term
 ;
 
-expr_term : expr_fact '*' expr_term
-| expr_fact '/' expr_term
-| expr_fact '%' expr_term
+expr_term : expr_term '*' expr_fact
+| expr_term '/' expr_fact
+| expr_term '%' expr_fact
 | expr_fact
 ;
 
@@ -40,18 +41,21 @@ expr_fact : '(' expr ')'
 | num = DIGIT
 ;
 
-unaryExpr : '++' IDENTIFIER | '--' IDENTIFIER;
+unaryExpr : '++' IDENTIFIER
+| '--' IDENTIFIER
+| IDENTIFIER '++'
+| IDENTIFIER '--';
 
 conditionStmt : conditionStmt LogicalOperator conditionStmt
 		| '!' conditionStmt 
         | relationalExpr 
 		| logicalExpr
-		| Bool
+		| BOOL
 		;
 
 relationalExpr : expr RelationalOperator expr
 | IDENTIFIER
-| Bool 
+| BOOL
 ;
 
 logicalExpr : relationalExpr LogicalOperator relationalExpr
@@ -64,7 +68,7 @@ ternaryOperator : conditionStmt '?' ternaryStatement ':' ternaryStatement;
 
 ternaryStatement : printStatement
 			| initializeStatement
-			| Bool
+			| BOOL
 			;
 
 
@@ -73,21 +77,22 @@ loopStatement : ifLoop
 		| forLoop
 		;
 
-ifLoop : 'if' '(' conditionStmt ')' '{' statement '}' 'else' '{' statement '}' ;
+ifLoop : 'if' '(' conditionStmt ')' '{' statementList '}' 'else' '{' statementList '}'
+ | 'if' '(' conditionStmt ')' '{' statementList '}';
 
-whileLoop : 'while' '(' conditionStmt ')' '{' statement '}';
+whileLoop : 'while' '(' conditionStmt ')' '{' statementList '}';
 
-forLoop : 'for' IDENTIFIER 'in range' '(' NumberValue ',' NumberValue ')' '{' statement '}'
-| 'for' '(' initializeStatement ';' conditionStmt ';' expr ')' '{' statement '}'  
-| 'for' '(' initializeStatement ';' conditionStmt ';' unaryExpr ')' '{' statement '}'  ;
+forLoop : 'for' IDENTIFIER 'in range' '(' NumberValue ',' NumberValue ')' '{' statementList '}'
+| 'for' '(' initializeStatement ';' conditionStmt ';' expr ')' '{' statementList '}'
+| 'for' '(' initializeStatement ';' conditionStmt ';' unaryExpr ')' '{' statementList '}';
 
 printStatement : 'print' '(' IDENTIFIER ')' | 'print' '(' String ')' ;
 
 DataType : ('int' | 'float' | 'string' | 'bool');
 
-DataTypeValue : Integer | Float | String | Bool;
+DataTypeValue : Integer | Float | String | BOOL;
 
-LogicalOperator : ( '&' | '| |' );
+LogicalOperator : ( '&' | '||' );
 RelationalOperator : ('>' | '<' | '>=' | '<=' | '==' | '!=' );
 
 String : '“' [a-zA-Z0-9]* '”';
@@ -95,7 +100,7 @@ String : '“' [a-zA-Z0-9]* '”';
 DIGIT :[0-9]+;
 Integer : '-' DIGIT | DIGIT;
 Float : DIGIT | DIGIT '.' DIGIT | '-' DIGIT | '-' DIGIT '.' DIGIT;
-Bool : ('true' | 'false');
+BOOL : ('true' | 'false');
 
 IDENTIFIER : [a-z][a-zA-Z0-9_]*;
 
