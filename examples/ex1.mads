@@ -1,7 +1,18 @@
 main() {
-    int a = 5 ;
-    int b = 2 ;
-    int d = 2 ;
-    int c ;
-    c = a * b;
+int a;
+int prev= a;
+int curr= 1;
+int next = 1;
+int n= 10;
+print (prev);
+print (curr);
+n=n-2;
+while (n!=0)
+{
+next=prev+curr;
+print(next);
+prev=curr;
+curr=next;
+n=n-1;
+}
 }
