@@ -4,71 +4,125 @@ grammar MADS;
     package compiler;
 }
 
-program : 'main' '(' ')' '{' statementList '}';
+program : 'main' LeftParen RightParen LeftBrace statementList RightBrace;
 
 statementList : statementList statement | statement;
 
-statement: declaration ';'
-| unaryExpr ';'
-| expr ';'
-| printStatement ';'
-| ternaryOperator ';'
+statement: declaration Semi
+| unaryExpr Semi
+| expr Semi
+| printStatement Semi
+| ternaryOperator Semi
 | loopStatement
 ;
 
-declaration : DataType IDENTIFIER
+declaration : TypeSpecifier Identifier
             | initializeStatement
 			;
 
-initializeStatement : DataType IDENTIFIER '=' DataTypeValue
-			| varName = IDENTIFIER '=' DataTypeValue
-			| varName = IDENTIFIER '=' expr
+initializeStatement : TypeSpecifier Identifier Assign Constant
+            | TypeSpecifier Identifier Assign Identifier
+            | TypeSpecifier Identifier Assign expr
+			| assignmentStatement
 			;
 
-expr : expr '+' expr_term
-| expr '-' expr_term
+assignmentStatement:  varName = Identifier Assign Constant
+            | varName = Identifier Assign Identifier
+            | varName = Identifier Assign expr;
+
+TypeSpecifier : (Int | Float | Bool | String);
+
+expr : expr Plus expr_term
+| expr Minus expr_term
 | expr_term
 ;
 
-expr_term : expr_term '*' expr_fact
-| expr_term '/' expr_fact
-| expr_term '%' expr_fact
+expr_term : expr_term Star expr_fact
+| expr_term Div expr_fact
+| expr_term Mod expr_fact
 | expr_fact
 ;
 
-expr_fact : '(' expr ')'
-| varName = IDENTIFIER
-| num = DIGIT
+expr_fact : LeftParen expr RightParen
+| varName = Identifier
+| num = DigitSequence
+| floatNum = FractionalSequence
 ;
 
-unaryExpr : '++' IDENTIFIER
-| '--' IDENTIFIER
-| IDENTIFIER '++'
-| IDENTIFIER '--';
 
-conditionStmt : conditionStmt LogicalOperator conditionStmt
-		| '!' conditionStmt 
-        | relationalExpr 
+DigitSequence
+    :   Digit+
+    ;
+
+FractionalSequence
+    :   DigitSequence? '.' DigitSequence
+    |   DigitSequence '.'
+    ;
+
+Identifier
+    :   IdentifierNondigit
+        (   IdentifierNondigit
+        |   Digit
+        )*
+    ;
+
+Constant
+    :   NumberConstant
+    |   BoolConstant
+    |   CharacterConstant
+    ;
+
+BoolConstant: ( 'true' | 'false' );
+
+NumberConstant : IntegerConstant
+ |   FloatingConstant;
+
+
+fragment
+Digit
+    :   [0-9]
+    ;
+
+unaryExpr : PlusPlus Identifier
+| MinusMinus Identifier
+| Identifier PlusPlus
+| Identifier MinusMinus;
+
+conditionStmt : relationalExpr
 		| logicalExpr
-		| BOOL
+		| equalityExpr
 		;
 
-relationalExpr : expr RelationalOperator expr
-| IDENTIFIER
-| BOOL
+relationalExpr : relationalExpr RelationalOperator relationalExpr
+| Identifier
+| expr
 ;
 
-logicalExpr : relationalExpr LogicalOperator relationalExpr
-		| relationalExpr LogicalOperator logicalExpr
-		| '!' relationalExpr
-		| '!' logicalExpr
+equalityExpr: equalityExpr EqualityOperator equalityExpr
+| Identifier | True | False ;
+
+RelationalOperator : ('>' | '<' | '>=' | '<=' |'==' | '!=' );
+
+EqualityOperator : ('==' | '!=' );
+
+logicalExpr : logicalExpr LogicalOperator comparisonExpr
+		| comparisonExpr LogicalOperator logicalExpr
+		| Not comparisonExpr
+		| Not logicalExpr
+		| Identifier | True | False
 		;
 
-ternaryOperator : conditionStmt '?' ternaryStatement ':' ternaryStatement;
+
+LogicalOperator : ( '&' | '||' );
+
+
+comparisonExpr: relationalExpr | equalityExpr;
+
+ternaryOperator : conditionStmt Question ternaryStatement Colon ternaryStatement;
 
 ternaryStatement : printStatement
 			| initializeStatement
-			| BOOL
+			| expr
 			;
 
 
@@ -77,50 +131,167 @@ loopStatement : ifLoop
 		| forLoop
 		;
 
-ifLoop : 'if' '(' conditionStmt ')' '{' statementList '}' 'else' '{' statementList '}'
+ifLoop : 'if' '(' conditionStmt ')' statementList '{' 'else' '{' statementList '}'
  | 'if' '(' conditionStmt ')' '{' statementList '}';
 
 whileLoop : 'while' '(' conditionStmt ')' '{' statementList '}';
 
-forLoop : 'for' IDENTIFIER 'in range' '(' NumberValue ',' NumberValue ')' '{' statementList '}'
-| 'for' '(' initializeStatement ';' conditionStmt ';' expr ')' '{' statementList '}'
+forLoop : 'for' Identifier 'in range' '(' numberValue ',' numberValue ')' '{' statementList '}'
+| 'for' '(' initializeStatement ';' conditionStmt ';' assignmentStatement ')' '{' statementList '}'
 | 'for' '(' initializeStatement ';' conditionStmt ';' unaryExpr ')' '{' statementList '}';
 
-printStatement : 'print' '(' IDENTIFIER ')' | 'print' '(' String ')' ;
+numberValue: Identifier | DigitSequence;
 
-DataType : ('int' | 'float' | 'string' | 'bool');
+printStatement : 'print' LeftParen Identifier RightParen | 'print' LeftParen Constant RightParen ;
 
-DataTypeValue : Integer | Float | String | BOOL;
+Float : 'float';
+Int : 'int';
+String : 'string';
+Bool : 'bool';
 
-LogicalOperator : ( '&' | '||' );
-RelationalOperator : ('>' | '<' | '>=' | '<=' | '==' | '!=' );
+True : 'true';
+False : 'false';
 
-String : '“' [a-zA-Z0-9]* '”';
+LeftParen : '(';
+RightParen : ')';
+LeftBrace : '{';
+RightBrace : '}';
 
-DIGIT :[0-9]+;
-Integer : '-' DIGIT | DIGIT;
-Float : DIGIT | DIGIT '.' DIGIT | '-' DIGIT | '-' DIGIT '.' DIGIT;
-BOOL : ('true' | 'false');
+Less : '<';
+LessEqual : '<=';
+Greater : '>';
+GreaterEqual : '>=';
 
-IDENTIFIER : [a-z][a-zA-Z0-9_]*;
+Plus : '+';
+PlusPlus : '++';
+Minus : '-';
+MinusMinus : '--';
+Star : '*';
+Div : '/';
+Mod : '%';
+And : '&';
+Or : '||';
+Not : '!';
+Question : '?';
+Colon : ':';
+Semi : ';';
+Comma : ',';
+Assign : '=';
+Equal : '==';
+NotEqual : '!=';
+Dot : '.';
 
-NumberValue : IDENTIFIER | DIGIT;
+fragment
+IdentifierNondigit
+    :   Nondigit
+    ;
 
-Keyword : ('start' | 'end' | 'int' | 'float' | 'string' | 'bool' | 'for' | 'while' | 'if' | 'else' | 'true' | 'false' | 'print' | 'and' | 'or' |  'not');
+fragment
+Nondigit
+    :   [a-zA-Z_]
+    ;
 
+
+fragment
+IntegerConstant
+    :   DecimalConstant
+    ;
+
+fragment
+DecimalConstant
+    :   NonzeroDigit Digit*
+    ;
+
+fragment
+NonzeroDigit
+    :   [1-9]
+    ;
+
+fragment
+FloatingConstant
+    :   DecimalFloatingConstant
+    ;
+
+fragment
+DecimalFloatingConstant
+    :   FractionalConstant
+    |   DigitSequence
+    ;
+
+
+fragment
+FractionalConstant
+    :   DigitSequence? '.' DigitSequence
+    |   DigitSequence '.'
+    ;
+
+
+fragment
+Sign
+    :   '+' | '-'
+    ;
+
+fragment
+CharacterConstant
+    :   '"' CCharSequence '"'
+    ;
+
+fragment
+CCharSequence
+    :   CChar*
+    ;
+
+fragment
+CChar
+    :   ~['\\\r\n]
+    |   EscapeSequence
+    ;
+
+fragment
+EscapeSequence
+    :   SimpleEscapeSequence
+    ;
+
+fragment
+SimpleEscapeSequence
+    :   '\\' ['"?abfnrtv\\]
+    ;
+
+StringLiteral
+    :   '"' SCharSequence? '"'
+    ;
+
+fragment
+SCharSequence
+    :   SChar+
+    ;
+
+fragment
+SChar
+    :   ~["\\\r\n]
+    |   EscapeSequence
+    |   '\\\n'   // Added line
+    |   '\\\r\n' // Added line
+    ;
 
 Whitespace
-   : [ \t]+ -> skip
-   ;
+    :   [ \t]+
+        -> skip
+    ;
 
 Newline
-   : ('\r' '\n'? | '\n') -> skip
-   ;
+    :   (   '\r' '\n'?
+        |   '\n'
+        )
+        -> skip
+    ;
 
 BlockComment
-   : '/*' .*? '*/' -> skip
-   ;
+    :   '/*' .*? '*/'
+        -> skip
+    ;
 
 LineComment
-   : '//' ~ [\r\n]* -> skip
-   ;
+    :   '//' ~[\r\n]*
+        -> skip
+    ;
