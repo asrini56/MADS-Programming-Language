@@ -1,8 +1,5 @@
 // Generated from MADS.g4 by ANTLR 4.8
 
-    package compiler;
-
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -73,6 +70,18 @@ public class MADSBaseListener implements MADSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInitializeStatement(MADSParser.InitializeStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignmentStatement(MADSParser.AssignmentStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentStatement(MADSParser.AssignmentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -150,6 +159,18 @@ public class MADSBaseListener implements MADSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEqualityExpr(MADSParser.EqualityExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualityExpr(MADSParser.EqualityExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLogicalExpr(MADSParser.LogicalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -157,6 +178,18 @@ public class MADSBaseListener implements MADSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLogicalExpr(MADSParser.LogicalExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterComparisonExpr(MADSParser.ComparisonExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComparisonExpr(MADSParser.ComparisonExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -229,6 +262,18 @@ public class MADSBaseListener implements MADSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitForLoop(MADSParser.ForLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumberValue(MADSParser.NumberValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumberValue(MADSParser.NumberValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

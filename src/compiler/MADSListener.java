@@ -1,7 +1,4 @@
 // Generated from MADS.g4 by ANTLR 4.8
-
-    package compiler;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -59,6 +56,16 @@ public interface MADSListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInitializeStatement(MADSParser.InitializeStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentStatement(MADSParser.AssignmentStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentStatement(MADSParser.AssignmentStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#expr}.
 	 * @param ctx the parse tree
@@ -120,6 +127,16 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitRelationalExpr(MADSParser.RelationalExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MADSParser#equalityExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityExpr(MADSParser.EqualityExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MADSParser#equalityExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityExpr(MADSParser.EqualityExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MADSParser#logicalExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -129,6 +146,16 @@ public interface MADSListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogicalExpr(MADSParser.LogicalExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MADSParser#comparisonExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpr(MADSParser.ComparisonExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MADSParser#comparisonExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpr(MADSParser.ComparisonExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#ternaryOperator}.
 	 * @param ctx the parse tree
@@ -189,6 +216,16 @@ public interface MADSListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForLoop(MADSParser.ForLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberValue(MADSParser.NumberValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberValue(MADSParser.NumberValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#printStatement}.
 	 * @param ctx the parse tree
