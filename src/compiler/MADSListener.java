@@ -1,6 +1,7 @@
-package compiler;
-
 // Generated from MADS.g4 by ANTLR 4.8
+
+    package compiler;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -39,75 +40,293 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitStatement(MADSParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#declaration}.
+	 * Enter a parse tree produced by the {@code declareIdentifier}
+	 * labeled alternative in {@link MADSParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaration(MADSParser.DeclarationContext ctx);
+	void enterDeclareIdentifier(MADSParser.DeclareIdentifierContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#declaration}.
+	 * Exit a parse tree produced by the {@code declareIdentifier}
+	 * labeled alternative in {@link MADSParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaration(MADSParser.DeclarationContext ctx);
+	void exitDeclareIdentifier(MADSParser.DeclareIdentifierContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#initializeStatement}.
+	 * Enter a parse tree produced by the {@code initializeStmt}
+	 * labeled alternative in {@link MADSParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterInitializeStatement(MADSParser.InitializeStatementContext ctx);
+	void enterInitializeStmt(MADSParser.InitializeStmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#initializeStatement}.
+	 * Exit a parse tree produced by the {@code initializeStmt}
+	 * labeled alternative in {@link MADSParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitInitializeStatement(MADSParser.InitializeStatementContext ctx);
+	void exitInitializeStmt(MADSParser.InitializeStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#assignmentStatement}.
+	 * Enter a parse tree produced by the {@code initializeConstant}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssignmentStatement(MADSParser.AssignmentStatementContext ctx);
+	void enterInitializeConstant(MADSParser.InitializeConstantContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#assignmentStatement}.
+	 * Exit a parse tree produced by the {@code initializeConstant}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssignmentStatement(MADSParser.AssignmentStatementContext ctx);
+	void exitInitializeConstant(MADSParser.InitializeConstantContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#expr}.
+	 * Enter a parse tree produced by the {@code initializeIdentifier}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(MADSParser.ExprContext ctx);
+	void enterInitializeIdentifier(MADSParser.InitializeIdentifierContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#expr}.
+	 * Exit a parse tree produced by the {@code initializeIdentifier}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(MADSParser.ExprContext ctx);
+	void exitInitializeIdentifier(MADSParser.InitializeIdentifierContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#expr_term}.
+	 * Enter a parse tree produced by the {@code initializeExpr}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_term(MADSParser.Expr_termContext ctx);
+	void enterInitializeExpr(MADSParser.InitializeExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#expr_term}.
+	 * Exit a parse tree produced by the {@code initializeExpr}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_term(MADSParser.Expr_termContext ctx);
+	void exitInitializeExpr(MADSParser.InitializeExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#expr_fact}.
+	 * Enter a parse tree produced by the {@code assignstmt}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_fact(MADSParser.Expr_factContext ctx);
+	void enterAssignstmt(MADSParser.AssignstmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#expr_fact}.
+	 * Exit a parse tree produced by the {@code assignstmt}
+	 * labeled alternative in {@link MADSParser#initializeStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_fact(MADSParser.Expr_factContext ctx);
+	void exitAssignstmt(MADSParser.AssignstmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#unaryExpr}.
+	 * Enter a parse tree produced by the {@code assignConst}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterUnaryExpr(MADSParser.UnaryExprContext ctx);
+	void enterAssignConst(MADSParser.AssignConstContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#unaryExpr}.
+	 * Exit a parse tree produced by the {@code assignConst}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitUnaryExpr(MADSParser.UnaryExprContext ctx);
+	void exitAssignConst(MADSParser.AssignConstContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code assignIdentifier}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignIdentifier(MADSParser.AssignIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code assignIdentifier}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignIdentifier(MADSParser.AssignIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code assignExpr}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignExpr(MADSParser.AssignExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code assignExpr}
+	 * labeled alternative in {@link MADSParser#assignmentStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignExpr(MADSParser.AssignExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code addExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddExpression(MADSParser.AddExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code addExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddExpression(MADSParser.AddExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code termExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermExpression(MADSParser.TermExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code termExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermExpression(MADSParser.TermExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code subExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubExpression(MADSParser.SubExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code subExpression}
+	 * labeled alternative in {@link MADSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubExpression(MADSParser.SubExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code factExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactExpression(MADSParser.FactExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code factExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactExpression(MADSParser.FactExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code modExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void enterModExpression(MADSParser.ModExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code modExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void exitModExpression(MADSParser.ModExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code divExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivExpression(MADSParser.DivExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code divExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivExpression(MADSParser.DivExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code mulExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void enterMulExpression(MADSParser.MulExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code mulExpression}
+	 * labeled alternative in {@link MADSParser#expr_term}.
+	 * @param ctx the parse tree
+	 */
+	void exitMulExpression(MADSParser.MulExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bracketExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void enterBracketExpression(MADSParser.BracketExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bracketExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void exitBracketExpression(MADSParser.BracketExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierExpression(MADSParser.IdentifierExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierExpression(MADSParser.IdentifierExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumExpression(MADSParser.NumExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumExpression(MADSParser.NumExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code floatExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloatExpression(MADSParser.FloatExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code floatExpression}
+	 * labeled alternative in {@link MADSParser#expr_fact}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloatExpression(MADSParser.FloatExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code plusPlusId}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPlusPlusId(MADSParser.PlusPlusIdContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code plusPlusId}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPlusPlusId(MADSParser.PlusPlusIdContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code minusMinusId}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinusMinusId(MADSParser.MinusMinusIdContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code minusMinusId}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinusMinusId(MADSParser.MinusMinusIdContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code idPlusPlus}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdPlusPlus(MADSParser.IdPlusPlusContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code idPlusPlus}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdPlusPlus(MADSParser.IdPlusPlusContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code idMinusMinus}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdMinusMinus(MADSParser.IdMinusMinusContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code idMinusMinus}
+	 * labeled alternative in {@link MADSParser#unaryExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdMinusMinus(MADSParser.IdMinusMinusContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#conditionStmt}.
 	 * @param ctx the parse tree
@@ -119,45 +338,197 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitConditionStmt(MADSParser.ConditionStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#relationalExpr}.
+	 * Enter a parse tree produced by the {@code equal}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterRelationalExpr(MADSParser.RelationalExprContext ctx);
+	void enterEqual(MADSParser.EqualContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#relationalExpr}.
+	 * Exit a parse tree produced by the {@code equal}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitRelationalExpr(MADSParser.RelationalExprContext ctx);
+	void exitEqual(MADSParser.EqualContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#equalityExpr}.
+	 * Enter a parse tree produced by the {@code lesserThan}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterEqualityExpr(MADSParser.EqualityExprContext ctx);
+	void enterLesserThan(MADSParser.LesserThanContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#equalityExpr}.
+	 * Exit a parse tree produced by the {@code lesserThan}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitEqualityExpr(MADSParser.EqualityExprContext ctx);
+	void exitLesserThan(MADSParser.LesserThanContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#logicalExpr}.
+	 * Enter a parse tree produced by the {@code greaterOrEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterLogicalExpr(MADSParser.LogicalExprContext ctx);
+	void enterGreaterOrEqual(MADSParser.GreaterOrEqualContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#logicalExpr}.
+	 * Exit a parse tree produced by the {@code greaterOrEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitLogicalExpr(MADSParser.LogicalExprContext ctx);
+	void exitGreaterOrEqual(MADSParser.GreaterOrEqualContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#comparisonExpr}.
+	 * Enter a parse tree produced by the {@code expression}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterComparisonExpr(MADSParser.ComparisonExprContext ctx);
+	void enterExpression(MADSParser.ExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#comparisonExpr}.
+	 * Exit a parse tree produced by the {@code expression}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitComparisonExpr(MADSParser.ComparisonExprContext ctx);
+	void exitExpression(MADSParser.ExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lesserOrEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLesserOrEqual(MADSParser.LesserOrEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lesserOrEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLesserOrEqual(MADSParser.LesserOrEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code trueRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrueRltn(MADSParser.TrueRltnContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code trueRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrueRltn(MADSParser.TrueRltnContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code notEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotEqual(MADSParser.NotEqualContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code notEqual}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotEqual(MADSParser.NotEqualContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierRltn(MADSParser.IdentifierRltnContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierRltn(MADSParser.IdentifierRltnContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code falseRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFalseRltn(MADSParser.FalseRltnContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code falseRltn}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFalseRltn(MADSParser.FalseRltnContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterThan}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThan(MADSParser.GreaterThanContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterThan}
+	 * labeled alternative in {@link MADSParser#relationalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThan(MADSParser.GreaterThanContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalNot}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalNot(MADSParser.LogicalNotContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalNot}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalNot(MADSParser.LogicalNotContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierLogical(MADSParser.IdentifierLogicalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierLogical(MADSParser.IdentifierLogicalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code falseLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFalseLogical(MADSParser.FalseLogicalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code falseLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFalseLogical(MADSParser.FalseLogicalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code trueLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrueLogical(MADSParser.TrueLogicalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code trueLogical}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrueLogical(MADSParser.TrueLogicalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalAnd}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalAnd(MADSParser.LogicalAndContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalAnd}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalAnd(MADSParser.LogicalAndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalOr}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalOr(MADSParser.LogicalOrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalOr}
+	 * labeled alternative in {@link MADSParser#logicalExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalOr(MADSParser.LogicalOrContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#ternaryOperator}.
 	 * @param ctx the parse tree
@@ -189,15 +560,29 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitLoopStatement(MADSParser.LoopStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#ifLoop}.
+	 * Enter a parse tree produced by the {@code ifElseCondition}
+	 * labeled alternative in {@link MADSParser#ifLoop}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfLoop(MADSParser.IfLoopContext ctx);
+	void enterIfElseCondition(MADSParser.IfElseConditionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#ifLoop}.
+	 * Exit a parse tree produced by the {@code ifElseCondition}
+	 * labeled alternative in {@link MADSParser#ifLoop}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfLoop(MADSParser.IfLoopContext ctx);
+	void exitIfElseCondition(MADSParser.IfElseConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ifCondition}
+	 * labeled alternative in {@link MADSParser#ifLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfCondition(MADSParser.IfConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ifCondition}
+	 * labeled alternative in {@link MADSParser#ifLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfCondition(MADSParser.IfConditionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MADSParser#whileLoop}.
 	 * @param ctx the parse tree
@@ -209,33 +594,85 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitWhileLoop(MADSParser.WhileLoopContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#forLoop}.
+	 * Enter a parse tree produced by the {@code forRangeLoop}
+	 * labeled alternative in {@link MADSParser#forLoop}.
 	 * @param ctx the parse tree
 	 */
-	void enterForLoop(MADSParser.ForLoopContext ctx);
+	void enterForRangeLoop(MADSParser.ForRangeLoopContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#forLoop}.
+	 * Exit a parse tree produced by the {@code forRangeLoop}
+	 * labeled alternative in {@link MADSParser#forLoop}.
 	 * @param ctx the parse tree
 	 */
-	void exitForLoop(MADSParser.ForLoopContext ctx);
+	void exitForRangeLoop(MADSParser.ForRangeLoopContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#numberValue}.
+	 * Enter a parse tree produced by the {@code forAssignLoop}
+	 * labeled alternative in {@link MADSParser#forLoop}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumberValue(MADSParser.NumberValueContext ctx);
+	void enterForAssignLoop(MADSParser.ForAssignLoopContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#numberValue}.
+	 * Exit a parse tree produced by the {@code forAssignLoop}
+	 * labeled alternative in {@link MADSParser#forLoop}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumberValue(MADSParser.NumberValueContext ctx);
+	void exitForAssignLoop(MADSParser.ForAssignLoopContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MADSParser#printStatement}.
+	 * Enter a parse tree produced by {@link MADSParser#forIncrement}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrintStatement(MADSParser.PrintStatementContext ctx);
+	void enterForIncrement(MADSParser.ForIncrementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MADSParser#printStatement}.
+	 * Exit a parse tree produced by {@link MADSParser#forIncrement}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrintStatement(MADSParser.PrintStatementContext ctx);
+	void exitForIncrement(MADSParser.ForIncrementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierNumber}
+	 * labeled alternative in {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierNumber(MADSParser.IdentifierNumberContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierNumber}
+	 * labeled alternative in {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierNumber(MADSParser.IdentifierNumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code digitValue}
+	 * labeled alternative in {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterDigitValue(MADSParser.DigitValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code digitValue}
+	 * labeled alternative in {@link MADSParser#numberValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitDigitValue(MADSParser.DigitValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code printIdentifier}
+	 * labeled alternative in {@link MADSParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintIdentifier(MADSParser.PrintIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code printIdentifier}
+	 * labeled alternative in {@link MADSParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintIdentifier(MADSParser.PrintIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code printString}
+	 * labeled alternative in {@link MADSParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintString(MADSParser.PrintStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code printString}
+	 * labeled alternative in {@link MADSParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintString(MADSParser.PrintStringContext ctx);
 }
