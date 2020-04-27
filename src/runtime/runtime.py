@@ -1,6 +1,3 @@
-"""
-Code for Runtime Environment
-"""
 codeList = []
 intList = []
 scope = []
@@ -10,7 +7,7 @@ start = 0
 iterator = 0
 
 def main():
-    fileName = open("intermediate_code.txt", "r")
+    fileName = open("intermediate_code3.txt", "r")
     codeList  = fileName.read().split("\n")
     print(codeList)
     global iterator
@@ -21,7 +18,6 @@ def main():
 def set_iterator(i):
     global iterator
     iterator = i
-
 
 def execute(iterator,d,codeList):
     global start
@@ -53,7 +49,6 @@ def execute(iterator,d,codeList):
                 print("Undeclared variable")
 
         if s[0] == 'ADD':
-            
             if check(s[1],d) and check(s[2],d) and check(s[3],d):
                 d[s[3]]=d[s[1]]+d[s[2]]
             else:
@@ -86,11 +81,79 @@ def execute(iterator,d,codeList):
             else:
                 print("Undeclared variable")
 
+        if s[0] == 'IFLOOP':
+            pass
+
+        if s[0] == 'CNDT':
+            if s[1] == 'true' or d.get(s[1])=='true':
+                d["LOOP"]=1
+            else:
+                set_iterator(int(s[2]))
+
         if s[0] == 'PRINT':
             if s[1].startswith("\""):
                 print(s[1])
             else:
                 print(d[s[1]])
+            
+        if s[0] == 'ELSE':
+            if d["LOOP"]>0:
+                iterator = codeList.index('ENDIF')
+                print(codeList.index('ENDIF'))
+                d["IFLOOP"]=1
+
+        if s[0] == 'EQL':
+            if d[s[1]] == d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'
+
+        if s[0] == 'NOTEQL':
+            if d[s[1]] != d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'         
+        
+        if s[0] == 'SML':
+            if d[s[1]] < d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'
+                
+        
+        if s[0] == 'SMLEQL':
+            if d[s[1]] <= d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'
+                        
+        if s[0] == 'GTR':
+            if d[s[1]] > d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'
+        
+        if s[0] == 'GTREQL':
+            if d[s[1]] >= d[s[2]]:
+                d[s[3]] = 'true'
+            else:
+                d[s[3]] = 'false'
+                
+        if s[0] == 'WHILE':
+            print('while')
+            pass
+
+        if s[0] == 'GOTO':
+            set_iterator(int(s[1]))
+        
+        if s[0] == 'FORLOOP':
+            pass
+        
+        if s[0] == 'ENDFOR':
+            pass
+            
+        if s[0] == 'END':
+            pass
 
 def check(ch, dict):
     if ch in dict.keys():
@@ -104,4 +167,10 @@ def check(ch, dict):
     else:
         return False
 
+def getScope():
+    temp = scope.pop()
+    scope.append(temp)
+    return temp
+    
 main()
+print(d)
