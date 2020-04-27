@@ -16,37 +16,37 @@ statement: declaration Semi
 | loopStatement
 ;
 
-declaration : TypeSpecifier Identifier
-            | initializeStatement
+declaration : TypeSpecifier Identifier #declareIdentifier
+            | initializeStatement #initializeStmt
 			;
 
-initializeStatement : TypeSpecifier Identifier Assign Constant
-            | TypeSpecifier Identifier Assign Identifier
-            | TypeSpecifier Identifier Assign expr
-			| assignmentStatement
+initializeStatement : TypeSpecifier Identifier Assign Constant #initializeConstant
+            | TypeSpecifier Identifier Assign Identifier #initializeIdentifier
+            | TypeSpecifier Identifier Assign expr #initializeExpr
+			| assignmentStatement #assignstmt
 			;
 
-assignmentStatement:  varName = Identifier Assign Constant
-            | varName = Identifier Assign Identifier
-            | varName = Identifier Assign expr;
+assignmentStatement:  varName = Identifier Assign Constant #assignConst
+            | varName = Identifier Assign Identifier #assignIdentifier
+            | varName = Identifier Assign expr #assignExpr;
 
 TypeSpecifier : (Int | Float | Bool | String);
 
-expr : expr Plus expr_term
-| expr Minus expr_term
-| expr_term
+expr : expr Plus expr_term #addExpression
+| expr Minus expr_term #subExpression
+| expr_term #termExpression
 ;
 
-expr_term : expr_term Star expr_fact
-| expr_term Div expr_fact
-| expr_term Mod expr_fact
-| expr_fact
+expr_term : expr_term Star expr_fact #mulExpression
+| expr_term Div expr_fact #divExpression
+| expr_term Mod expr_fact #modExpression
+| expr_fact #factExpression
 ;
 
-expr_fact : LeftParen expr RightParen
-| varName = Identifier
-| num = DigitSequence
-| floatNum = FractionalSequence
+expr_fact : LeftParen expr RightParen #bracketExpression
+| varName = Identifier #identifierExpression
+| num = DigitSequence #numExpression
+| floatNum = FractionalSequence #floatExpression
 ;
 
 
@@ -83,40 +83,34 @@ Digit
     :   [0-9]
     ;
 
-unaryExpr : PlusPlus Identifier
-| MinusMinus Identifier
-| Identifier PlusPlus
-| Identifier MinusMinus;
+unaryExpr : PlusPlus Identifier #plusPlusId
+| MinusMinus Identifier #minusMinusId
+| Identifier PlusPlus #idPlusPlus
+| Identifier MinusMinus #idMinusMinus ;
 
 conditionStmt : relationalExpr
 		| logicalExpr
-		| equalityExpr
 		;
 
-relationalExpr : relationalExpr RelationalOperator relationalExpr
-| Identifier
-| expr
+relationalExpr : relationalExpr '>' relationalExpr #greaterThan |
+ relationalExpr '<' relationalExpr #lesserThan |
+ relationalExpr '>=' relationalExpr #greaterOrEqual |
+ relationalExpr '<=' relationalExpr #lesserOrEqual |
+ relationalExpr '==' relationalExpr #equal |
+ relationalExpr '!=' relationalExpr #notEqual |
+ Identifier #identifierRltn
+ | expr #expression
+ | 'true' #trueRltn
+ | 'false' #falseRltn
 ;
 
-equalityExpr: equalityExpr EqualityOperator equalityExpr
-| Identifier | True | False ;
-
-RelationalOperator : ('>' | '<' | '>=' | '<=' |'==' | '!=' );
-
-EqualityOperator : ('==' | '!=' );
-
-logicalExpr : logicalExpr LogicalOperator comparisonExpr
-		| comparisonExpr LogicalOperator logicalExpr
-		| Not comparisonExpr
-		| Not logicalExpr
-		| Identifier | True | False
+logicalExpr : logicalExpr '&' logicalExpr #logicalAnd
+        | logicalExpr '||' logicalExpr #logicalOr
+		| Not logicalExpr #logicalNot
+		| Identifier #identifierLogical
+		| True #trueLogical
+		| False #falseLogical
 		;
-
-
-LogicalOperator : ( '&' | '||' );
-
-
-comparisonExpr: relationalExpr | equalityExpr;
 
 ternaryOperator : conditionStmt Question ternaryStatement Colon ternaryStatement;
 
@@ -131,18 +125,20 @@ loopStatement : ifLoop
 		| forLoop
 		;
 
-ifLoop : 'if' '(' conditionStmt ')' statementList '{' 'else' '{' statementList '}'
- | 'if' '(' conditionStmt ')' '{' statementList '}';
+ifLoop : 'if' '(' conditionStmt ')' statementList '{' 'else' '{' statementList '}' #ifElseCondition
+ | 'if' '(' conditionStmt ')' '{' statementList '}' #ifCondition ;
 
 whileLoop : 'while' '(' conditionStmt ')' '{' statementList '}';
 
-forLoop : 'for' Identifier 'in range' '(' numberValue ',' numberValue ')' '{' statementList '}'
-| 'for' '(' initializeStatement ';' conditionStmt ';' assignmentStatement ')' '{' statementList '}'
-| 'for' '(' initializeStatement ';' conditionStmt ';' unaryExpr ')' '{' statementList '}';
+forLoop : 'for' Identifier 'in range' '(' numberValue ',' numberValue ')' '{' statementList '}' #forRangeLoop
+| 'for' '(' initializeStatement ';' conditionStmt ';' forIncrement ')' '{' statementList '}' #forAssignLoop;
 
-numberValue: Identifier | DigitSequence;
+forIncrement : assignmentStatement | unaryExpr ;
 
-printStatement : 'print' LeftParen Identifier RightParen | 'print' LeftParen Constant RightParen ;
+numberValue: Identifier #identifierNumber| DigitSequence #digitValue;
+
+printStatement : 'print' LeftParen Identifier RightParen #printIdentifier
+| 'print' LeftParen Constant RightParen #printString;
 
 Float : 'float';
 Int : 'int';
