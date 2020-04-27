@@ -371,4 +371,348 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
         }
     }
 
+    @Override
+    public void enterConditionStmt(MADSParser.ConditionStmtContext ctx) {
+        stringBuilder.append("CNDT").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitConditionStmt(MADSParser.ConditionStmtContext ctx) {
+        stringBuilder.append("CNDT END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterEqual(MADSParser.EqualContext ctx) {
+        super.enterEqual(ctx);
+    }
+
+    @Override
+    public void exitEqual(MADSParser.EqualContext ctx) {
+        stringBuilder.append("EQL").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLesserThan(MADSParser.LesserThanContext ctx) {
+        super.enterLesserThan(ctx);
+    }
+
+    @Override
+    public void exitLesserThan(MADSParser.LesserThanContext ctx) {
+        stringBuilder.append("SML").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterGreaterOrEqual(MADSParser.GreaterOrEqualContext ctx) {
+        super.enterGreaterOrEqual(ctx);
+    }
+
+    @Override
+    public void exitGreaterOrEqual(MADSParser.GreaterOrEqualContext ctx) {
+        stringBuilder.append("GTREQL").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterExpression(MADSParser.ExpressionContext ctx) {
+        stringBuilder.append("EXPR CNDT").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitExpression(MADSParser.ExpressionContext ctx) {
+        stringBuilder.append("EXPR CNDT END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLesserOrEqual(MADSParser.LesserOrEqualContext ctx) {
+        super.enterLesserOrEqual(ctx);
+    }
+
+    @Override
+    public void exitLesserOrEqual(MADSParser.LesserOrEqualContext ctx) {
+        stringBuilder.append("SMLEQL").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterTrueRltn(MADSParser.TrueRltnContext ctx) {
+        super.enterTrueRltn(ctx);
+    }
+
+    @Override
+    public void exitTrueRltn(MADSParser.TrueRltnContext ctx) {
+        stringBuilder.append("BOOL TRUE").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterNotEqual(MADSParser.NotEqualContext ctx) {
+        super.enterNotEqual(ctx);
+    }
+
+    @Override
+    public void exitNotEqual(MADSParser.NotEqualContext ctx) {
+        stringBuilder.append("NOTEQL").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterIdentifierRltn(MADSParser.IdentifierRltnContext ctx) {
+        super.enterIdentifierRltn(ctx);
+    }
+
+    @Override
+    public void exitIdentifierRltn(MADSParser.IdentifierRltnContext ctx) {
+        if(ctx.Identifier().getText().equals("true") || ctx.Identifier().getText().equals("false")){
+            stringBuilder.append("BOOL ").append(ctx.Identifier().getText()).append(NEW_LINE);
+        } else {
+            if (varMap.containsKey(ctx.Identifier().getText())) {
+                stringBuilder.append(PULL).append(ctx.Identifier().getText()).append(NEW_LINE);
+            } else {
+                System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            }
+        }
+    }
+
+    @Override
+    public void enterFalseRltn(MADSParser.FalseRltnContext ctx) {
+        super.enterFalseRltn(ctx);
+    }
+
+    @Override
+    public void exitFalseRltn(MADSParser.FalseRltnContext ctx) {
+        stringBuilder.append("BOOL FALSE").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterGreaterThan(MADSParser.GreaterThanContext ctx) {
+        super.enterGreaterThan(ctx);
+    }
+
+    @Override
+    public void exitGreaterThan(MADSParser.GreaterThanContext ctx) {
+        stringBuilder.append("GTR").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLogicalNot(MADSParser.LogicalNotContext ctx) {
+        super.enterLogicalNot(ctx);
+    }
+
+    @Override
+    public void exitLogicalNot(MADSParser.LogicalNotContext ctx) {
+        stringBuilder.append("NOT").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterIdentifierLogical(MADSParser.IdentifierLogicalContext ctx) {
+        super.enterIdentifierLogical(ctx);
+    }
+
+    @Override
+    public void exitIdentifierLogical(MADSParser.IdentifierLogicalContext ctx) {
+        if(ctx.Identifier().getText().equals("true") || ctx.Identifier().getText().equals("false")){
+            stringBuilder.append("BOOL ").append(ctx.Identifier().getText()).append(NEW_LINE);
+        } else {
+            if (varMap.containsKey(ctx.Identifier().getText())) {
+                stringBuilder.append(PULL).append(ctx.Identifier().getText()).append(NEW_LINE);
+            } else {
+                System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            }
+        }
+    }
+
+    @Override
+    public void enterFalseLogical(MADSParser.FalseLogicalContext ctx) {
+        super.enterFalseLogical(ctx);
+    }
+
+    @Override
+    public void exitFalseLogical(MADSParser.FalseLogicalContext ctx) {
+        stringBuilder.append("BOOL FALSE").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterTrueLogical(MADSParser.TrueLogicalContext ctx) {
+        super.enterTrueLogical(ctx);
+    }
+
+    @Override
+    public void exitTrueLogical(MADSParser.TrueLogicalContext ctx) {
+        stringBuilder.append("BOOL TRUE").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLogicalAnd(MADSParser.LogicalAndContext ctx) {
+        super.enterLogicalAnd(ctx);
+    }
+
+    @Override
+    public void exitLogicalAnd(MADSParser.LogicalAndContext ctx) {
+        stringBuilder.append("AND").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLogicalOr(MADSParser.LogicalOrContext ctx) {
+        super.enterLogicalOr(ctx);
+    }
+
+    @Override
+    public void exitLogicalOr(MADSParser.LogicalOrContext ctx) {
+        stringBuilder.append("OR").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterTernaryOperator(MADSParser.TernaryOperatorContext ctx) {
+        stringBuilder.append("TRN").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitTernaryOperator(MADSParser.TernaryOperatorContext ctx) {
+        stringBuilder.append("TRN END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterTernaryStatement(MADSParser.TernaryStatementContext ctx) {
+        stringBuilder.append("TRNSTMT").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitTernaryStatement(MADSParser.TernaryStatementContext ctx) {
+        stringBuilder.append("TRNSTMT END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterLoopStatement(MADSParser.LoopStatementContext ctx) {
+        super.enterLoopStatement(ctx);
+    }
+
+    @Override
+    public void exitLoopStatement(MADSParser.LoopStatementContext ctx) {
+        super.exitLoopStatement(ctx);
+    }
+
+    @Override
+    public void enterIfElseCondition(MADSParser.IfElseConditionContext ctx) {
+        stringBuilder.append("IFLOOP").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitIfElseCondition(MADSParser.IfElseConditionContext ctx) {
+        stringBuilder.append("ENDIF").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterIfCondition(MADSParser.IfConditionContext ctx) {
+        stringBuilder.append("IFLOOP").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitIfCondition(MADSParser.IfConditionContext ctx) {
+        stringBuilder.append("ENDIF").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterWhileLoop(MADSParser.WhileLoopContext ctx) {
+        stringBuilder.append("WHILE").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitWhileLoop(MADSParser.WhileLoopContext ctx) {
+        stringBuilder.append("ENDWHILE").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterForRangeLoop(MADSParser.ForRangeLoopContext ctx) {
+        stringBuilder.append("FORLOOP").append(NEW_LINE);
+        stringBuilder.append(DECLARE).append("INT ").append(ctx.Identifier().getText()).append(NEW_LINE);
+    }
+
+    @Override
+    public void exitForRangeLoop(MADSParser.ForRangeLoopContext ctx) {
+        stringBuilder.append("ENDFOR").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterForAssignLoop(MADSParser.ForAssignLoopContext ctx) {
+        stringBuilder.append("FORLOOP").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitForAssignLoop(MADSParser.ForAssignLoopContext ctx) {
+        stringBuilder.append("ENDFOR").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterForIncrement(MADSParser.ForIncrementContext ctx) {
+        stringBuilder.append("FORINC").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitForIncrement(MADSParser.ForIncrementContext ctx) {
+        stringBuilder.append("FORINC END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterIdentifierNumber(MADSParser.IdentifierNumberContext ctx) {
+        stringBuilder.append("RANGE").append(NEW_LINE);
+        stringBuilder.append(PULL).append(ctx.Identifier()).append(NEW_LINE);
+    }
+
+    @Override
+    public void exitIdentifierNumber(MADSParser.IdentifierNumberContext ctx) {
+        stringBuilder.append("RANGE END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterDigitValue(MADSParser.DigitValueContext ctx) {
+        stringBuilder.append("RANGE").append(NEW_LINE);
+        stringBuilder.append("NUM ").append(ctx.DigitSequence().getText()).append(NEW_LINE);
+    }
+
+    @Override
+    public void exitDigitValue(MADSParser.DigitValueContext ctx) {
+        stringBuilder.append("RANGE END").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterPrintIdentifier(MADSParser.PrintIdentifierContext ctx) {
+        super.enterPrintIdentifier(ctx);
+    }
+
+    @Override
+    public void exitPrintIdentifier(MADSParser.PrintIdentifierContext ctx) {
+        if(varMap.containsKey(ctx.Identifier().getText())){
+            stringBuilder.append("PRINT ").append(ctx.Identifier().getText()).append(NEW_LINE);
+        } else {
+            System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+        }
+    }
+
+    @Override
+    public void enterPrintString(MADSParser.PrintStringContext ctx) {
+        super.enterPrintString(ctx);
+    }
+
+    @Override
+    public void exitPrintString(MADSParser.PrintStringContext ctx) {
+        if(ctx.Constant().getText().contains("\"")){
+            stringBuilder.append("PRINT ").append(ctx.Constant().getText()).append(NEW_LINE);
+        }
+    }
+
+    @Override
+    public void enterEveryRule(ParserRuleContext ctx) {
+        super.enterEveryRule(ctx);
+    }
+
+    @Override
+    public void exitEveryRule(ParserRuleContext ctx) {
+        super.exitEveryRule(ctx);
+    }
+
+    @Override
+    public void visitTerminal(TerminalNode node) {
+        super.visitTerminal(node);
+    }
+
+    @Override
+    public void visitErrorNode(ErrorNode node) {
+        super.visitErrorNode(node);
+    }
 }
