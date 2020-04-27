@@ -1,6 +1,5 @@
 package compiler;
 
-import compiler.MADSLexer;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -11,7 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ANTLRParser {
+public class MADSCompiler {
 
     public static void main(String[] args) throws IOException {
         String filename = "examples/ex1.mads";
@@ -26,10 +25,10 @@ public class ANTLRParser {
         System.out.println(parseTree.toStringTree(madsParser));
 
         TreeViewer viewer = new TreeViewer(Arrays.asList(madsParser.getRuleNames()), parseTree);
-        //viewer.open();
+        viewer.open();
 
         ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
-        parseTreeWalker.walk(new CustomMADSListener(filename), parseTree);
+        parseTreeWalker.walk(new IntermediateCodeGenerator(filename), parseTree);
     }
 
 }
