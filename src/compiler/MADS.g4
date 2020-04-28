@@ -125,8 +125,10 @@ loopStatement : ifLoop
 		| forLoop
 		;
 
-ifLoop : 'if' '(' conditionStmt ')' statementList '{' 'else' '{' statementList '}' #ifElseCondition
+ifLoop : 'if' '(' conditionStmt ')' '{' statementList '}' 'else' '{' elseStatement '}' #ifElseCondition
  | 'if' '(' conditionStmt ')' '{' statementList '}' #ifCondition ;
+
+elseStatement: statementList;
 
 whileLoop : 'while' '(' conditionStmt ')' '{' statementList '}';
 

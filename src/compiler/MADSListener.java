@@ -584,6 +584,16 @@ public interface MADSListener extends ParseTreeListener {
 	 */
 	void exitIfCondition(MADSParser.IfConditionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MADSParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStatement(MADSParser.ElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MADSParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStatement(MADSParser.ElseStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MADSParser#whileLoop}.
 	 * @param ctx the parse tree
 	 */

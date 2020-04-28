@@ -378,7 +378,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitConditionStmt(MADSParser.ConditionStmtContext ctx) {
-        stringBuilder.append("CNDT END").append(NEW_LINE);
+        stringBuilder.append("CNDTEND").append(NEW_LINE);
     }
 
     @Override
@@ -413,12 +413,12 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void enterExpression(MADSParser.ExpressionContext ctx) {
-        stringBuilder.append("EXPR CNDT").append(NEW_LINE);
+        //stringBuilder.append("EXPR CNDT").append(NEW_LINE);
     }
 
     @Override
     public void exitExpression(MADSParser.ExpressionContext ctx) {
-        stringBuilder.append("EXPR CNDT END").append(NEW_LINE);
+        //stringBuilder.append("EXPR CNDT END").append(NEW_LINE);
     }
 
     @Override
@@ -438,7 +438,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitTrueRltn(MADSParser.TrueRltnContext ctx) {
-        stringBuilder.append("BOOL TRUE").append(NEW_LINE);
+        stringBuilder.append("BOOL true").append(NEW_LINE);
     }
 
     @Override
@@ -476,7 +476,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitFalseRltn(MADSParser.FalseRltnContext ctx) {
-        stringBuilder.append("BOOL FALSE").append(NEW_LINE);
+        stringBuilder.append("BOOL false").append(NEW_LINE);
     }
 
     @Override
@@ -524,7 +524,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitFalseLogical(MADSParser.FalseLogicalContext ctx) {
-        stringBuilder.append("BOOL FALSE").append(NEW_LINE);
+        stringBuilder.append("BOOL false").append(NEW_LINE);
     }
 
     @Override
@@ -534,7 +534,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitTrueLogical(MADSParser.TrueLogicalContext ctx) {
-        stringBuilder.append("BOOL TRUE").append(NEW_LINE);
+        stringBuilder.append("BOOL true").append(NEW_LINE);
     }
 
     @Override
@@ -564,7 +564,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitTernaryOperator(MADSParser.TernaryOperatorContext ctx) {
-        stringBuilder.append("TRN END").append(NEW_LINE);
+        stringBuilder.append("TRNEND").append(NEW_LINE);
     }
 
     @Override
@@ -574,7 +574,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitTernaryStatement(MADSParser.TernaryStatementContext ctx) {
-        stringBuilder.append("TRNSTMT END").append(NEW_LINE);
+        stringBuilder.append("TRNSTMTEND").append(NEW_LINE);
     }
 
     @Override
@@ -595,6 +595,16 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
     @Override
     public void exitIfElseCondition(MADSParser.IfElseConditionContext ctx) {
         stringBuilder.append("ENDIF").append(NEW_LINE);
+    }
+
+    @Override
+    public void enterElseStatement(MADSParser.ElseStatementContext ctx) {
+        stringBuilder.append("ELSE").append(NEW_LINE);
+    }
+
+    @Override
+    public void exitElseStatement(MADSParser.ElseStatementContext ctx) {
+        super.exitElseStatement(ctx);
     }
 
     @Override
@@ -621,6 +631,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
     public void enterForRangeLoop(MADSParser.ForRangeLoopContext ctx) {
         stringBuilder.append("FORLOOP").append(NEW_LINE);
         stringBuilder.append(DECLARE).append("INT ").append(ctx.Identifier().getText()).append(NEW_LINE);
+        varMap.put(ctx.Identifier().getText(), "INT");
     }
 
     @Override
@@ -645,7 +656,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitForIncrement(MADSParser.ForIncrementContext ctx) {
-        stringBuilder.append("FORINC END").append(NEW_LINE);
+        stringBuilder.append("FORINCEND").append(NEW_LINE);
     }
 
     @Override
@@ -656,7 +667,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitIdentifierNumber(MADSParser.IdentifierNumberContext ctx) {
-        stringBuilder.append("RANGE END").append(NEW_LINE);
+        stringBuilder.append("RANGEEND").append(NEW_LINE);
     }
 
     @Override
@@ -667,7 +678,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
 
     @Override
     public void exitDigitValue(MADSParser.DigitValueContext ctx) {
-        stringBuilder.append("RANGE END").append(NEW_LINE);
+        stringBuilder.append("RANGEEND").append(NEW_LINE);
     }
 
     @Override
