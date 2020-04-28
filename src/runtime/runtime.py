@@ -19,7 +19,7 @@ def iterate_code(code_list, end_inst):
 
 
 def main():
-    file_name = open("ifLoop.imc", "r")
+    file_name = open("intermediate.imc", "r")
     code_list = file_name.read().split("\n")
     global iterator
     iterate_code(code_list, len(code_list))
@@ -147,3 +147,172 @@ def execute_expression(token):
     elif token[0] == 'MOD':
         result = temp2 % temp1
     expr_stack.append(result)
+
+
+def execute_condition(token):
+    global expr_stack
+    temp1 = expr_stack.pop()
+    temp2 = True
+    if token[0] != 'NOT':
+        temp2 = expr_stack.pop()
+    result = True
+    if token[0] == 'NOT':
+        result = (not temp1)
+    elif token[0] == 'EQL':
+        result = (temp2 == temp1)
+    elif token[0] == 'NOTEQL':
+        result = (temp2 != temp1)
+    elif token[0] == 'SML':
+        result = (temp2 < temp1)
+    elif token[0] == 'SMLEQL':
+        result = (temp2 <= temp1)
+    elif token[0] == 'GTR':
+        result = (temp2 > temp1)
+    elif token[0] == 'GTREQL':
+        result = (temp2 >= temp1)
+    elif token[0] == 'AND':
+        result = (temp2 and temp1)
+    elif token[0] == 'OR':
+        result = (temp2 or temp1)
+    expr_stack.append(result)
+
+
+def execute_ternary(code_list):
+    # empty
+    pass
+
+
+def execute_if_loop(code_list):
+    # empty
+    pass
+
+
+def execute_while_loop(code_list):
+    global iterator
+    cndt_line = iterator
+    iterator += 2
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    while token[0] != 'CNDTEND':
+        execute(code_list)
+        iterator += 1
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+    cndt = expr_stack.pop()
+    iterator += 1
+    # cndt true
+    end_inst = len(code_list)
+    if cndt:
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] != 'ENDWHILE':
+                execute(code_list)
+                iterator += 1
+            elif token[0] == 'ENDWHILE':
+                end_inst = iterator
+                iterator = cndt_line
+                break
+    else:
+        no_of_while = 0
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+        while no_of_while == 0 and token[0] != 'ENDWHILE':
+            iterator += 1
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] == 'WHILE':
+                no_of_while += 1
+            elif token[0] == 'ENDWHILE' and no_of_while > 0:
+                no_of_while -= 1
+
+    iterate_code(code_list, end_inst)
+
+
+def execute_for_loop(code_list):
+    # empty
+    pass
+
+
+def execute(code_list):
+    global value_map
+    global variable_map
+    global expr_stack
+    global iterator
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    expr_token = ["ADD", "SUB", "MUL", "DIV", "MOD"]
+    rltn_expr_token = ["EQL", "NOTEQL", "SML", "GTR", "SMLEQL", "GTREQL", "AND", "OR", "NOT"]
+    if token[0] == 'START':
+        # Start of IC
+        pass
+
+    elif token[0] == 'DECL':
+        execute_declare(token)
+
+    elif token[0] == 'ASGN':
+        execute_assign(token)
+
+    elif token[0] == 'PULL':
+        execute_pull(token)
+
+    elif token[0] == 'STORE':
+        execute_store(token)
+
+    elif token[0] == 'NUM':
+        expr_stack.append(int(token[1]))
+
+    elif token[0] == 'FLOAT':
+        expr_stack.append(float(token[1]))
+
+    elif token[0] == 'BOOL':
+        expr_stack.append(bool(token[1].capitalize()))
+
+    elif token[0] == 'PRINT':
+        execute_print(token)
+
+    elif token[0] in expr_token:
+        execute_expression(token)
+
+    elif token[0] in rltn_expr_token:
+        execute_condition(token)
+
+    elif token[0] == 'TRN':
+        execute_ternary(code_list)
+
+    elif token[0] == 'IFLOOP':
+        execute_if_loop(code_list)
+
+    elif token[0] == 'WHILE':
+        execute_while_loop(code_list)
+    #elif token[0] == 'ENDWHILE':
+
+
+    elif token[0] == 'FORLOOP':
+        execute_for_loop(code_list)
+
+    elif token[0] == 'END':
+        # empty
+        pass
+
+
+def check(ch, dict):
+    if ch in dict.keys():
+        return True
+    elif int(ch):
+        try:
+            value_map[ch] = int(ch)
+            return True
+        except:
+            pass
+    else:
+        return False
+
+
+def get_scope():
+    temp = scope.pop()
+    scope.append(temp)
+    return temp
+
+
+main()
