@@ -178,8 +178,55 @@ def execute_condition(token):
 
 
 def execute_ternary(code_list):
-    # empty
-    pass
+    global iterator
+    iterator += 2
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    while token[0] != 'CNDTEND':
+        execute(code_list)
+        iterator += 1
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+    cndt = expr_stack.pop()
+    end_inst = len(code_list)
+    
+    if str(cndt) == 'True':
+        checker = 0
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] == 'TRNSTMT':
+                iterator += 1
+            if token[0] != 'TRNSTMTEND':
+                if checker == 0:
+                    execute(code_list)
+                    iterator += 1
+                elif checker == 1:
+                    iterator += 1
+            if token[0] == 'TRNSTMTEND':
+                checker = 1
+                iterator += 1
+            if token[0] == 'TRNEND':
+                end_inst = iterator
+                break
+    else:
+        checker = 0
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] != 'TRNSTMTEND':
+                if checker == 0:
+                    iterator +=1
+                elif checker == 1:
+                    execute(code_list)
+                    iterator += 1
+            if token[0] == 'TRNSTMTEND':
+                checker = 1
+                iterator += 1
+            if token[0] == 'TRNEND':
+                end_inst = iterator
+                break
+    iterate_code(code_list, end_inst)
 
 
 def execute_if_loop(code_list):
