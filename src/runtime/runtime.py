@@ -183,8 +183,56 @@ def execute_ternary(code_list):
 
 
 def execute_if_loop(code_list):
-    # empty
-    pass
+    global iterator
+    iterator += 2
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    while token[0] != 'CNDTEND':
+        execute(code_list)
+        iterator += 1
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+    cndt = expr_stack.pop()
+    checker = 0
+    end_inst = len(code_list)
+    
+    if str(cndt) == "True":
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] != 'ELSE':
+                if checker == 0:
+                    execute(code_list)
+                    iterator += 1
+                if checker == 1:
+                    if token[0] !='ENDIF':
+                        iterator+=1
+                    elif token[0] == 'ENDIF':
+                        end_inst = iterator
+                        break
+            elif token[0] == 'ELSE':
+                checker = 1
+                iterator +=1  
+                
+    else:
+        checked = 0
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] =='ELSE':
+                checked = 1
+                iterator += 1
+            if token[0] !='ENDIF':
+                if checked == 0:
+                    iterator +=1
+                elif checked == 1:
+                    execute(code_list)
+                    iterator += 1
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
+    
+    iterate_code(code_list, end_inst)
 
 
 def execute_while_loop(code_list):
