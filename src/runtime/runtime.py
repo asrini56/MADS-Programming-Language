@@ -1,176 +1,149 @@
 codeList = []
 intList = []
 scope = []
-global d
-d = {}
-start = 0
+value_map = {}
+variable_map = {}
 iterator = 0
+expr_stack = []
+
+
+def iterate_code(code_list, end_inst):
+    global iterator
+    while iterator < end_inst:
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+        if token[0] == 'ENDWHILE':
+            return
+        execute(code_list)
+        iterator += 1
+
 
 def main():
-    fileName = open("intermediate_code3.txt", "r")
-    codeList  = fileName.read().split("\n")
-    print(codeList)
+    file_name = open("ifLoop.imc", "r")
+    code_list = file_name.read().split("\n")
     global iterator
-    while(iterator < len(codeList)):
-        execute(iterator,d,codeList)
-        iterator = iterator + 1
+    iterate_code(code_list, len(code_list))
+
 
 def set_iterator(i):
     global iterator
     iterator = i
 
-def execute(iterator,d,codeList):
-    global start
-    ac = 0
-    code = codeList[iterator]
-    s = code.split(" ")
-    if s[0] == 'START':
-        start = 1
 
-    if start == 1:
-        if s[0] == 'DECL':
-            if d.get(s[2]):
-                print("Already Declared")
-            else:
-                d[s[2]]=0
-
-        if s[0] == 'ASGN':
-            if s[1] in d.keys():
-                try:
-                    d[s[1]]=int(s[2])
-                except:
-                    d[s[1]]=d[s[2]]
-            elif s[2] in d.keys():
-                try:
-                    d[s[1]]=int(s[2])
-                except:
-                    d[s[1]]=d[s[2]]
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'ADD':
-            if check(s[1],d) and check(s[2],d) and check(s[3],d):
-                d[s[3]]=d[s[1]]+d[s[2]]
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'SUB':
-            if check(s[1],d) and check(s[2],d) and check(s[3],d):
-                d[s[3]]=d[s[1]]-d[s[2]]
-                print(d[s[3]])
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'MUL':
-            if check(s[1],d) and check(s[2],d) and check(s[3],d):
-                d[s[3]]=d[s[1]]*d[s[2]]
-                print(d[s[3]])
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'DIV':
-            if check(s[1],d) and check(s[2],d) and check(s[3],d):
-                d[s[3]]=d[s[1]]/d[s[2]]
-                print(d[s[3]])
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'MOD':
-            if check(s[1],d) and check(s[2],d) and check(s[3],d):
-                d[s[3]]=d[s[1]]%d[s[2]]
-            else:
-                print("Undeclared variable")
-
-        if s[0] == 'IFLOOP':
-            pass
-
-        if s[0] == 'CNDT':
-            if s[1] == 'true' or d.get(s[1])=='true':
-                d["LOOP"]=1
-            else:
-                set_iterator(int(s[2]))
-
-        if s[0] == 'PRINT':
-            if s[1].startswith("\""):
-                print(s[1])
-            else:
-                print(d[s[1]])
-            
-        if s[0] == 'ELSE':
-            if d["LOOP"]>0:
-                iterator = codeList.index('ENDIF')
-                print(codeList.index('ENDIF'))
-                d["IFLOOP"]=1
-
-        if s[0] == 'EQL':
-            if d[s[1]] == d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'
-
-        if s[0] == 'NOTEQL':
-            if d[s[1]] != d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'         
-        
-        if s[0] == 'SML':
-            if d[s[1]] < d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'
-                
-        
-        if s[0] == 'SMLEQL':
-            if d[s[1]] <= d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'
-                        
-        if s[0] == 'GTR':
-            if d[s[1]] > d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'
-        
-        if s[0] == 'GTREQL':
-            if d[s[1]] >= d[s[2]]:
-                d[s[3]] = 'true'
-            else:
-                d[s[3]] = 'false'
-                
-        if s[0] == 'WHILE':
-            print('while')
-            pass
-
-        if s[0] == 'GOTO':
-            set_iterator(int(s[1]))
-        
-        if s[0] == 'FORLOOP':
-            pass
-        
-        if s[0] == 'ENDFOR':
-            pass
-            
-        if s[0] == 'END':
-            pass
-
-def check(ch, dict):
-    if ch in dict.keys():
+def default_value(data_type):
+    if data_type == "INT":
+        return 0
+    elif data_type == "FLOAT":
+        return 0.0
+    elif data_type == "BOOL":
         return True
-    elif int(ch):
+    elif data_type == "STRING":
+        return ""
+
+
+def check_data_type(data_type, value):
+    if data_type == "INT":
         try:
-            d[ch]=int(ch)
+            int(value)
             return True
         except:
             pass
-    else:
-        return False
+    elif data_type == "FLOAT":
+        try:
+            float(value)
+            return True
+        except:
+            pass
+    elif data_type == "BOOL":
+        try:
+            bool(value.capitalize())
+            return True
+        except:
+            pass
+    elif data_type == "STRING" and value.startswith("\""):
+        return True
+    return False
 
-def getScope():
-    temp = scope.pop()
-    scope.append(temp)
-    return temp
-    
-main()
-print(d)
+
+def typecast(data_type, value):
+    try:
+        if data_type == "INT":
+            return int(value)
+        elif data_type == "FLOAT":
+            return float(value)
+        elif data_type == "BOOL":
+            return bool(value.capitalize())
+        elif data_type == "STRING":
+            return value
+    except:
+        print(f"Unable to typecast {value} to {data_type} datatype")
+
+
+def execute_declare(token):
+    global variable_map
+    if variable_map.get(token[2]):
+        print(f"Already Declared variable {token[2]}")
+    else:
+        variable_map[token[2]] = token[1]
+        value_map[token[2]] = default_value(token[1])
+
+
+def execute_assign(token):
+    global variable_map
+    if token[1] in variable_map.keys():
+        if token[2] in variable_map.keys():
+            value = value_map[token[2]]
+        else:
+            value = token[2]
+        if check_data_type(variable_map[token[1]], value):
+            value = typecast(variable_map[token[1]], value)
+            value_map[token[1]] = value
+        else:
+            print(f"Datatype of {token[1]} and {token[2]} does not match. Or {token[2]} not declared.")
+    else:
+        print(f"Undeclared variable {token[1]}")
+
+
+def execute_print(token):
+    if token[1].startswith("\""):
+        print(token[1])
+    elif token[1] in variable_map.keys():
+        print(value_map[token[1]])
+    else:
+        print(f"Undeclared variable {token[1]}")
+
+
+def execute_pull(token):
+    if token[1] in variable_map.keys():
+        expr_stack.append(value_map[token[1]])
+    else:
+        print(f"Undeclared variable {token[1]}")
+
+
+def execute_store(token):
+    if token[1] in variable_map.keys():
+        value = expr_stack.pop()
+        if check_data_type(variable_map[token[1]], value):
+            value_map[token[1]] = value
+        else:
+            print(f"Datatype of {token[1]} and {token[2]} does not match")
+    else:
+        print(f"Undeclared variable {token[1]}")
+
+
+def execute_expression(token):
+    global expr_stack
+    temp1 = expr_stack.pop()
+    temp2 = expr_stack.pop()
+    result = 0
+    if token[0] == 'ADD':
+        result = temp2 + temp1
+    elif token[0] == 'SUB':
+        result = temp2 - temp1
+    elif token[0] == 'MUL':
+        result = temp2 * temp1
+    elif token[0] == 'DIV':
+        result = temp2 / temp1
+    elif token[0] == 'MOD':
+        result = temp2 % temp1
+    expr_stack.append(result)
