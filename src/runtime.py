@@ -129,7 +129,7 @@ def execute_store(token):
         if check_data_type(variable_map[token[1]], value):
             value_map[token[1]] = value
         else:
-            print(f"Datatype of {token[1]} and {token[2]} does not match")
+            print(f"Datatype of {token[1]} and {value} does not match")
     else:
         print(f"Undeclared variable {token[1]}")
 
