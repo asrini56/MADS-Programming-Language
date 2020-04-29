@@ -24,10 +24,13 @@ def iterate_code(code_list, end_inst):
 
 def main(argv):
     file1=argv.replace(".mads",".imc")
-    file_name = open(file1, "r")
-    code_list = file_name.read().split("\n")
-    global iterator
-    iterate_code(code_list, len(code_list))
+    try:
+        file_name = open(file1, "r")
+        code_list = file_name.read().split("\n")
+        global iterator
+        iterate_code(code_list, len(code_list))
+    except:
+        print(f"Not able to open {file1} file")
 
 
 def default_value(data_type):
