@@ -243,6 +243,7 @@ def execute_ternary(code_list):
                 end_inst = iterator
                 break
     iterate_code(code_list, end_inst)
+    iterator -= 1
     
 
 # Execute If loop
