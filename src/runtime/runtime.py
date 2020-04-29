@@ -321,11 +321,11 @@ def execute_for_loop(code_list):
     inc_start = iterator + 2
     for_body_start = code_list.index("FORINCEND", iterator) + 1
     # find end for loop
-    no_of_for = 0
+    no_of_for = 1
     for_end = iterator
     code_line = code_list[iterator]
     token = code_line.split(" ")
-    while no_of_for == 0 and token[0] != 'ENDFOR':
+    while not(no_of_for == 0 and token[0] == 'ENDFOR'):
         for_end += 1
         token = code_list[for_end].split(" ")
         if token[0] == 'FOR':
@@ -376,7 +376,7 @@ def execute_for_range(code_list):
     code_line = code_list[iterator]
     temp_iter = iterator
     token = code_line.split(" ")
-    while no_of_for == 0 and token[0] != 'ENDFOR':
+    while not(no_of_for == 0 and token[0] == 'ENDFOR'):
         temp_iter += 1
         token = code_list[temp_iter].split(" ")
         if token[0] == 'FOR':
