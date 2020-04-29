@@ -29,6 +29,7 @@ def iterate_code(code_list, end_inst):
 
 # Main method
 def main(argv):
+    print(argv)
     file1=argv.replace(".mads",".imc")
     try:
         file_name = open(file1, "r")
@@ -127,7 +128,7 @@ def execute_print(code_list):
         value = value[5:].replace('\"', '').replace('\\n', '\n')
         print(value)
     elif token[1] in variable_map.keys():
-        print(value_map[token[1]].replace('\"', ''))
+        print(value_map[token[1]])
     else:
         print(f"Undeclared variable {token[1]}")
 
