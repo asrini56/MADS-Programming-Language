@@ -9,20 +9,17 @@ expr_stack = []
 
 def iterate_code(code_list, end_inst):
     global iterator
-    global value_map
-    terminal_token = ["ENDWHILE", "ENDFORLOOP", "ENDFOR"]
     while iterator < end_inst:
         code_line = code_list[iterator]
         token = code_line.split(" ")
-        if token[0] in terminal_token:
-            return value_map
+        if token[0] == 'ENDWHILE':
+            return
         execute(code_list)
         iterator += 1
-    return value_map
 
 
 def main():
-    file_name = open("intermediate.imc", "r")
+    file_name = open("ternary.imc", "r")
     code_list = file_name.read().split("\n")
     global iterator
     iterate_code(code_list, len(code_list))
@@ -182,48 +179,108 @@ def execute_condition(token):
 
 def execute_ternary(code_list):
     # empty
-    pass
-
-
-def execute_if_loop(code_list):
-    # empty
-    pass
-
-
-def execute_loop(code_list, cndt, cndt_line, start, end, var_name):
     global iterator
-    global value_map
+    iterator += 2
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    while token[0] != 'CNDTEND':
+        execute(code_list)
+        iterator += 1
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+    cndt = expr_stack.pop()
     end_inst = len(code_list)
-    if cndt:
+    
+    if str(cndt) == 'True':
+        checker = 0
         while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
-            if token[0] != end:
-                execute(code_list)
+            if token[0] == 'TRNSTMT':
                 iterator += 1
-            elif token[0] == end:
+            if token[0] != 'TRNSTMTEND':
+                if checker == 0:
+                    execute(code_list)
+                    iterator += 1
+                elif checker == 1:
+                    iterator += 1
+            if token[0] == 'TRNSTMTEND':
+                checker = 1
+                iterator += 1
+            if token[0] == 'TRNEND':
                 end_inst = iterator
-                iterator = cndt_line
-                '''print(value_map[var_name])
-                value = value_map[var_name]
-                value_map[var_name] = value + 1
-                print(value_map[var_name])'''
                 break
     else:
-        no_of_while = 0
-        code_line = code_list[iterator]
-        token = code_line.split(" ")
-        while no_of_while == 0 and token[0] != end:
-            iterator += 1
+        checker = 0
+        while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
-            if token[0] == start:
-                no_of_while += 1
-            elif token[0] == end and no_of_while > 0:
-                no_of_while -= 1
-
+            if token[0] != 'TRNSTMTEND':
+                if checker == 0:
+                    iterator +=1
+                elif checker == 1:
+                    execute(code_list)
+                    iterator += 1
+            if token[0] == 'TRNSTMTEND':
+                checker = 1
+                iterator += 1
+            if token[0] == 'TRNEND':
+                end_inst = iterator
+                break
     iterate_code(code_list, end_inst)
+    
 
+def execute_if_loop(code_list):
+    global iterator
+    iterator += 2
+    code_line = code_list[iterator]
+    token = code_line.split(" ")
+    while token[0] != 'CNDTEND':
+        execute(code_list)
+        iterator += 1
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+    cndt = expr_stack.pop()
+    checker = 0
+    end_inst = len(code_list)
+    
+    if str(cndt) == "True":
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] != 'ELSE':
+                if checker == 0:
+                    execute(code_list)
+                    iterator += 1
+                if checker == 1:
+                    if token[0] !='ENDIF':
+                        iterator+=1
+                    elif token[0] == 'ENDIF':
+                        end_inst = iterator
+                        break
+            elif token[0] == 'ELSE':
+                checker = 1
+                iterator +=1  
+                
+    else:
+        checked = 0
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] =='ELSE':
+                checked = 1
+                iterator += 1
+            if token[0] !='ENDIF':
+                if checked == 0:
+                    iterator +=1
+                elif checked == 1:
+                    execute(code_list)
+                    iterator += 1
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
+    
+    iterate_code(code_list, end_inst)
 
 def execute_while_loop(code_list):
     global iterator
@@ -237,105 +294,38 @@ def execute_while_loop(code_list):
         code_line = code_list[iterator]
         token = code_line.split(" ")
     cndt = expr_stack.pop()
-    iterator += 1
     # cndt true
-    execute_loop(code_list, cndt, cndt_line, 'WHILE', 'ENDWHILE', None)
+    end_inst = len(code_list)
+    if cndt:
+        while True:
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] != 'ENDWHILE':
+                execute(code_list)
+                iterator += 1
+            elif token[0] == 'ENDWHILE':
+                end_inst = iterator
+                iterator = cndt_line
+                break
+    else:
+        no_of_while = 0
+        code_line = code_list[iterator]
+        token = code_line.split(" ")
+        while no_of_while == 0 and token[0] != 'ENDWHILE':
+            iterator += 1
+            code_line = code_list[iterator]
+            token = code_line.split(" ")
+            if token[0] == 'WHILE':
+                no_of_while += 1
+            elif token[0] == 'ENDWHILE' and no_of_while > 0:
+                no_of_while -= 1
+
+    iterate_code(code_list, end_inst)
 
 
 def execute_for_loop(code_list):
-    global iterator
-    iterator += 1
-    token = code_list[iterator].split(" ")
-    var_name = token[2]
-    cndt_start = code_list.index("CNDT", iterator) + 1
-    cndt_end = code_list.index("CNDTEND", iterator)
-    iterate_code(code_list, cndt_end)
-    cndt = expr_stack.pop()
-    inc_start = iterator + 2
-    for_body_start = code_list.index("FORINCEND", iterator) + 1
-    # find end for loop
-    no_of_for = 0
-    for_end = iterator
-    code_line = code_list[iterator]
-    token = code_line.split(" ")
-    while no_of_for == 0 and token[0] != 'ENDFOR':
-        for_end += 1
-        token = code_list[for_end].split(" ")
-        if token[0] == 'FOR':
-            no_of_for += 1
-        elif token[0] == 'ENDFOR' and no_of_for > 0:
-            no_of_for -= 1
-    while cndt:
-        iterator = for_body_start
-        iterate_code(code_list, for_end)
-        iterator = inc_start
-        iterate_code(code_list, for_body_start)
-        iterator = cndt_start
-        iterate_code(code_list, cndt_end)
-        cndt = expr_stack.pop()
-    iterator = for_end
-    variable_map.pop(var_name)
-    value_map.pop(var_name)
-
-
-def get_range_value(code_list):
-    token = code_list[iterator].split(" ")
-    if token[0] == 'PULL' and token[1] in variable_map.keys():
-        return value_map[token[1]]
-    elif token[0] == 'NUM':
-        return int(token[1])
-    else:
-        print(f"Undeclared variable {token[1]}")
-        return 0
-
-
-def execute_for_range(code_list):
-    global iterator
-    iterator += 1
-    code_line = code_list[iterator]
-    token = code_line.split(" ")
-    var_name = token[2]
-    if token[2] not in variable_map.keys():
-        execute_declare(token)
-    iterator += 2
-    temp1 = get_range_value(code_list)
-    iterator += 3
-    temp2 = get_range_value(code_list)
-    value_map[var_name] = temp1
-    iterator += 2
-    cndt_line = iterator
-
-    no_of_for = 0
-    code_line = code_list[iterator]
-    temp_iter = iterator
-    token = code_line.split(" ")
-    while no_of_for == 0 and token[0] != 'ENDFOR':
-        temp_iter += 1
-        token = code_list[temp_iter].split(" ")
-        if token[0] == 'FOR':
-            no_of_for += 1
-        elif token[0] == 'ENDFOR' and no_of_for > 0:
-            no_of_for -= 1
-    for i in range(temp1, temp2):
-        iterator = cndt_line
-        iterate_code(code_list, temp_iter)
-        value_map[var_name] = i + 1
-
-
-def execute_increment(token):
-    global variable_map
-    if token[1] in variable_map.keys():
-        value_map[token[1]] += 1
-    else:
-        print(f"Undeclared variable {token[1]}")
-
-
-def execute_decrement(token):
-    global variable_map
-    if token[1] in variable_map.keys():
-        value_map[token[1]] -= 1
-    else:
-        print(f"Undeclared variable {token[1]}")
+    # empty
+    pass
 
 
 def execute(code_list):
@@ -347,9 +337,9 @@ def execute(code_list):
     token = code_line.split(" ")
     expr_token = ["ADD", "SUB", "MUL", "DIV", "MOD"]
     rltn_expr_token = ["EQL", "NOTEQL", "SML", "GTR", "SMLEQL", "GTREQL", "AND", "OR", "NOT"]
-    terminal_token = ["CNDTEND", "ENDWHILE", "ENDFORLOOP", "TRNEND", "TRNSTMTEND", "ENDIF", "ENDFOR", "FORINCEND", "RANGEEND", "START", "END"]
-    if token[0] in terminal_token:
-        return value_map
+    
+    if token[0] == 'START':
+        pass
 
     elif token[0] == 'DECL':
         execute_declare(token)
@@ -375,12 +365,6 @@ def execute(code_list):
     elif token[0] == 'PRINT':
         execute_print(token)
 
-    elif token[0] == 'INC':
-        execute_increment(token)
-
-    elif token[0] == 'DEC':
-        execute_decrement(token)
-
     elif token[0] in expr_token:
         execute_expression(token)
 
@@ -397,10 +381,10 @@ def execute(code_list):
         execute_while_loop(code_list)
 
     elif token[0] == 'FORLOOP':
-        if code_list[iterator+2].startswith("RANGE"):
-            execute_for_range(code_list)
-        else:
-            execute_for_loop(code_list)
+        execute_for_loop(code_list)
+
+    elif token[0] == 'END':
+        pass
 
 
 def check(ch, dict):
@@ -414,12 +398,6 @@ def check(ch, dict):
             pass
     else:
         return False
-
-
-def get_scope():
-    temp = scope.pop()
-    scope.append(temp)
-    return temp
 
 
 main()
