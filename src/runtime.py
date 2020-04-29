@@ -324,7 +324,10 @@ def execute_for_loop(code_list):
     global iterator
     iterator += 1
     token = code_list[iterator].split(" ")
-    var_name = token[2]
+    del_var = False
+    if token[0] == 'DECL':
+        var_name = token[2]
+        del_var = True
     cndt_start = code_list.index("CNDT", iterator) + 1
     cndt_end = code_list.index("CNDTEND", iterator)
     iterate_code(code_list, cndt_end)
@@ -352,8 +355,9 @@ def execute_for_loop(code_list):
         iterate_code(code_list, cndt_end)
         cndt = expr_stack.pop()
     iterator = for_end
-    variable_map.pop(var_name)
-    value_map.pop(var_name)
+    if del_var:
+        variable_map.pop(var_name)
+        value_map.pop(var_name)
 
 
 def get_range_value(code_list):
