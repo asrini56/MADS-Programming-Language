@@ -25,6 +25,13 @@ Compiler and Runtime was built on Windows and MacOS platform
 ```shell script
 sh ./execute.sh <program_name.mads>
 ```
+execute.sh has following commands.
+```shell script
+# For compiling the program file and generate intermediate code
+java -jar MADS.jar "$1"
+# For running the intermediate code and display the result
+python3 runtime.py "$1"
+```
 - Output will be displayed in the terminal
 
 ### For Window
