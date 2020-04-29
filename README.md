@@ -32,7 +32,7 @@ sh ./execute.sh <program_name.mads>
 2. Execute the following command in command prompt - 
 ```shell script
 java -jar MADS.jar <program_name.mads>
-python runtime.py <program_name.mads>
+python runtime/runtime.py <program_name.mads>
 ```
 - Output will be displayed in the command prompt.
 
