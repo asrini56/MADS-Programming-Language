@@ -1,6 +1,6 @@
 main(){
     bool a = true;
-    bool b = false
+    bool b = false;
     if (!b){
         if (a || b){
             print("a is true, b is false");
