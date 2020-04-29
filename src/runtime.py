@@ -1,6 +1,6 @@
 """
  @author: Ashwin Srinivasan
- @author: Madhu Srinivasan
+ @author: MadhuMadhavan Sridhar
  @version: 1.0
  @since: 20/04/2020
  Runtime code for MADS language
