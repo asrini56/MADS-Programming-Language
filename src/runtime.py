@@ -181,7 +181,6 @@ def execute_condition(token):
 
 
 def execute_ternary(code_list):
-    # empty
     global iterator
     iterator += 2
     code_line = code_list[iterator]
@@ -251,6 +250,9 @@ def execute_if_loop(code_list):
         while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
             if token[0] != 'ELSE':
                 if checker == 0:
                     execute(code_list)
@@ -270,6 +272,9 @@ def execute_if_loop(code_list):
         while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
             if token[0] =='ELSE':
                 # checked = 1
                 iterator += 1
