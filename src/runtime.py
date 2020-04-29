@@ -129,7 +129,7 @@ def execute_store(token):
         if check_data_type(variable_map[token[1]], value):
             value_map[token[1]] = value
         else:
-            print(f"Datatype of {token[1]} and {token[2]} does not match")
+            print(f"Datatype of {token[1]} and {value} does not match")
     else:
         print(f"Undeclared variable {token[1]}")
 
@@ -181,7 +181,6 @@ def execute_condition(token):
 
 
 def execute_ternary(code_list):
-    # empty
     global iterator
     iterator += 2
     code_line = code_list[iterator]
@@ -251,6 +250,9 @@ def execute_if_loop(code_list):
         while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
             if token[0] != 'ELSE':
                 if checker == 0:
                     execute(code_list)
@@ -270,8 +272,11 @@ def execute_if_loop(code_list):
         while True:
             code_line = code_list[iterator]
             token = code_line.split(" ")
+            if token[0] == 'ENDIF':
+                end_inst = iterator
+                break
             if token[0] =='ELSE':
-                # checked = 1
+                checked = 1
                 iterator += 1
             if token[0] !='ENDIF':
                 if checked == 0:
