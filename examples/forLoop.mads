@@ -1,0 +1,7 @@
+main(){
+	int x = 2;
+	int y = 7;
+	for ( int i = x; i < y ; i++ ){
+		print(i);
+	}
+}

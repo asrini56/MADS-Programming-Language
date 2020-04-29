@@ -1,3 +1,10 @@
+"""
+ @author: Ashwin Srinivasan
+ @author: Madhu Srinivasan
+ @version: 1.0
+ @since: 20/04/2020
+ Runtime code for MADS language
+"""
 import sys
 
 value_map = {}
@@ -60,8 +67,7 @@ def check_data_type(data_type, value):
             pass
     elif data_type == "BOOL":
         try:
-            bool(value.capitalize())
-            return True
+            return isinstance(value, bool)
         except:
             pass
     elif data_type == "STRING" and value.startswith("\""):
@@ -77,7 +83,7 @@ def typecast(data_type, value):
         elif data_type == "FLOAT":
             return float(value)
         elif data_type == "BOOL":
-            return bool(value.capitalize())
+            return value
         elif data_type == "STRING":
             return value
     except:
@@ -100,6 +106,8 @@ def execute_assign(token):
     if token[1] in variable_map.keys():
         if token[2] in variable_map.keys():
             value = value_map[token[2]]
+        elif token[2] == "true" or token[2] == "false":
+            value = (token[2] == 'true')
         else:
             value = token[2]
         if check_data_type(variable_map[token[1]], value):
@@ -119,7 +127,7 @@ def execute_print(code_list):
         value = value[5:].replace('\"', '').replace('\\n', '\n')
         print(value)
     elif token[1] in variable_map.keys():
-        print(value_map[token[1]])
+        print(value_map[token[1]].replace('\"', ''))
     else:
         print(f"Undeclared variable {token[1]}")
 
@@ -187,6 +195,7 @@ def execute_condition(token):
         result = (temp2 >= temp1)
     elif token[0] == 'AND':
         result = (temp2 and temp1)
+        print(value_map)
     elif token[0] == 'OR':
         result = (temp2 or temp1)
     expr_stack.append(result)
