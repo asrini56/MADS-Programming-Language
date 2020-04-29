@@ -10,14 +10,26 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static compiler.Constants.*;
-
 public class IntermediateCodeGenerator extends MADSBaseListener {
 
     private StringBuilder stringBuilder = new StringBuilder();
     private String fileName = null;
 
     private Map<String, String> varMap = new HashMap<>();
+    private int errorCount = 0;
+
+    private static final String SPACE = " ";
+    private static final String NEW_LINE = "\n";
+    private static final String START = "START";
+    private static final String END = "END";
+    private static final String DECLARE = "DECL ";
+    private static final String ASSIGN = "ASGN ";
+    private static final String PULL = "PULL ";
+    private static final String COMPILE_TIME_ERROR = "Compile Time Error: ";
+    private static final String VARIABLE = "Variable ";
+    private static final String ALREADY_DECLARED = " already declared in this scope";
+    private static final String NOT_DECLARED = " not declared in this scope";
+    private static final String FILE_WRITE_ERROR ="Unable to write Intermediate code to ";
 
     IntermediateCodeGenerator(String filename){
         this.fileName = filename;
@@ -31,6 +43,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             Files.write(Paths.get(icFileName), intermediateCode);
         } catch (IOException e) {
             System.err.println(COMPILE_TIME_ERROR + FILE_WRITE_ERROR + icFileName);
+            errorCount++;
         }
     }
 
@@ -42,7 +55,11 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
     @Override
     public void exitProgram(MADSParser.ProgramContext ctx) {
         stringBuilder.append(END).append(NEW_LINE);
-        writeToFile();
+        if(errorCount == 0) {
+            writeToFile();
+        } else{
+            System.err.println(errorCount + " Error(s) in compiling the program");
+        }
     }
 
     @Override
@@ -73,6 +90,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             varMap.put(ctx.Identifier().getText(), ctx.TypeSpecifier().getText().toUpperCase());
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + ALREADY_DECLARED);
+            errorCount++;
         }
     }
 
@@ -101,6 +119,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append(" ").append(ctx.Constant().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + ALREADY_DECLARED);
+            errorCount++;
         }
     }
 
@@ -119,6 +138,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append(" ").append(ctx.Identifier(1).getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier(0).getText() + ALREADY_DECLARED);
+            errorCount++;
         }
     }
 
@@ -135,6 +155,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             varMap.put(ctx.Identifier().getText(), ctx.TypeSpecifier().getText().toUpperCase());
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + ALREADY_DECLARED);
+            errorCount++;
         }
     }
 
@@ -144,6 +165,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("STORE ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -164,6 +186,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append(" ").append(ctx.Constant().getText()).append("\n");
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -179,6 +202,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append(" ").append(ctx.Identifier(1).getText()).append("\n");
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier(0).getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -198,6 +222,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("STORE ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -292,6 +317,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append(PULL).append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -326,6 +352,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("INC ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -340,6 +367,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("DEC ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -354,6 +382,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("INC ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -368,6 +397,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("DEC ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
@@ -465,6 +495,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
                 stringBuilder.append(PULL).append(ctx.Identifier().getText()).append(NEW_LINE);
             } else {
                 System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+                errorCount++;
             }
         }
     }
@@ -513,6 +544,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
                 stringBuilder.append(PULL).append(ctx.Identifier().getText()).append(NEW_LINE);
             } else {
                 System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+                errorCount++;
             }
         }
     }
@@ -692,6 +724,7 @@ public class IntermediateCodeGenerator extends MADSBaseListener {
             stringBuilder.append("PRINT ").append(ctx.Identifier().getText()).append(NEW_LINE);
         } else {
             System.err.println(COMPILE_TIME_ERROR + VARIABLE + ctx.Identifier().getText() + NOT_DECLARED);
+            errorCount++;
         }
     }
 
