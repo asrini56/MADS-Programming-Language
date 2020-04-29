@@ -3,13 +3,16 @@ package compiler;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Deepti Paul
+ * @author Srinivasan Sundar
+ */
 public class IntermediateCodeGenerator extends MADSBaseListener {
 
     private StringBuilder stringBuilder = new StringBuilder();

@@ -1,14 +1,12 @@
 import sys
 
-codeList = []
-intList = []
-scope = []
 value_map = {}
 variable_map = {}
 iterator = 0
 expr_stack = []
 
 
+# Function to iterate code till 'end_inst'
 def iterate_code(code_list, end_inst):
     global iterator
     global value_map
@@ -22,6 +20,7 @@ def iterate_code(code_list, end_inst):
         iterator += 1
 
 
+# Main method
 def main(argv):
     file1=argv.replace(".mads",".imc")
     try:
@@ -30,9 +29,10 @@ def main(argv):
         global iterator
         iterate_code(code_list, len(code_list))
     except:
-        print(f"Not able to open {file1} file")
+        pass
 
 
+# returns default value of given datatype
 def default_value(data_type):
     if data_type == "INT":
         return 0
@@ -44,6 +44,7 @@ def default_value(data_type):
         return ""
 
 
+# checks whether value belongs to 'data_type' dataType or not
 def check_data_type(data_type, value):
     if data_type == "INT":
         try:
@@ -68,6 +69,7 @@ def check_data_type(data_type, value):
     return False
 
 
+# typecasts value to 'data_type' dataType
 def typecast(data_type, value):
     try:
         if data_type == "INT":
@@ -82,6 +84,7 @@ def typecast(data_type, value):
         print(f"Unable to typecast {value} to {data_type} datatype")
 
 
+# Executes declaration of variable
 def execute_declare(token):
     global variable_map
     if variable_map.get(token[2]):
@@ -91,6 +94,7 @@ def execute_declare(token):
         value_map[token[2]] = default_value(token[1])
 
 
+# Executes assignment instruction
 def execute_assign(token):
     global variable_map
     if token[1] in variable_map.keys():
@@ -107,6 +111,7 @@ def execute_assign(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes print statement
 def execute_print(code_list):
     token = code_list[iterator].split(" ")
     if token[1].startswith("\""):
@@ -119,6 +124,7 @@ def execute_print(code_list):
         print(f"Undeclared variable {token[1]}")
 
 
+# Pulls token value from expr_stack
 def execute_pull(token):
     if token[1] in variable_map.keys():
         expr_stack.append(value_map[token[1]])
@@ -126,6 +132,7 @@ def execute_pull(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Stores token value to expr_stack
 def execute_store(token):
     if token[1] in variable_map.keys():
         value = expr_stack.pop()
@@ -137,6 +144,7 @@ def execute_store(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes expression statement
 def execute_expression(token):
     global expr_stack
     temp1 = expr_stack.pop()
@@ -155,6 +163,7 @@ def execute_expression(token):
     expr_stack.append(result)
 
 
+# Executes condition statement
 def execute_condition(token):
     global expr_stack
     temp1 = expr_stack.pop()
@@ -183,6 +192,7 @@ def execute_condition(token):
     expr_stack.append(result)
 
 
+# Executes ternary statement
 def execute_ternary(code_list):
     global iterator
     iterator += 2
@@ -235,6 +245,7 @@ def execute_ternary(code_list):
     iterate_code(code_list, end_inst)
     
 
+# Execute If loop
 def execute_if_loop(code_list):
     global iterator
     iterator += 2
@@ -294,6 +305,7 @@ def execute_if_loop(code_list):
     iterate_code(code_list, end_inst)
 
 
+# Execute While loop
 def execute_while_loop(code_list):
     global iterator
     iterator += 1
@@ -323,6 +335,7 @@ def execute_while_loop(code_list):
     iterator = while_end
 
 
+# Execute For loop
 def execute_for_loop(code_list):
     global iterator
     iterator += 1
@@ -363,6 +376,7 @@ def execute_for_loop(code_list):
         value_map.pop(var_name)
 
 
+# Gets range value
 def get_range_value(code_list):
     token = code_list[iterator].split(" ")
     if token[0] == 'PULL' and token[1] in variable_map.keys():
@@ -374,6 +388,7 @@ def get_range_value(code_list):
         return 0
 
 
+# Executes for range loop
 def execute_for_range(code_list):
     global iterator
     iterator += 1
@@ -407,6 +422,7 @@ def execute_for_range(code_list):
         value_map[var_name] = i + 1
 
 
+# Executes increment statement
 def execute_increment(token):
     global variable_map
     if token[1] in variable_map.keys():
@@ -415,6 +431,7 @@ def execute_increment(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes decrement statement
 def execute_decrement(token):
     global variable_map
     if token[1] in variable_map.keys():
@@ -423,6 +440,7 @@ def execute_decrement(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes intermediate code
 def execute(code_list):
     global value_map
     global variable_map
