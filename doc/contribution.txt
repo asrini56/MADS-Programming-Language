@@ -1,4 +1,4 @@
-CONTRIBUTION
+﻿CONTRIBUTION
 Compiler and Virtual Machine for a Programming Language(MADS)
 
 
@@ -14,20 +14,79 @@ Milestone 1
 Tasks:
 Researched on the language and tools to be used for the project. 
 Understood the project requirements and gathered information for the entire project design.
-Considering our research on the various parsing tools and other project related information, we have identified the best tools and languages for effectively implementing our project, as mentioned below.
+Considering our research on the various parsing tools and other project related information, we have identified the best tools and languages for effectively implementing our project.
 All the members also contributed towards writing the grammar. Finally, named our programming language as MADS.
 
 
-Future plans and tasks to be completed:
-1. Write Grammar for ANTLR in the .g4 format. ( Ashwin Srinivasan, Madhu Madhavan )
-2. Debug and test grammar, fix the edge case issues. Research on tokenizing and generating parse trees.  (  Srinivasan Sundar,   Deepti Paul )
-3. Implement the compiler for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration.  ( Srinivasan Sundar,  Madhu Madhavan, Deepti Paul,  Ashwin Srinivasan )
-4. Implement the runtime for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration.   (  Deepti Paul,  Ashwin Srinivasan)
-5. Bug fixes and documentation.  (  Srinivasan Sundar,  Madhu Madhavan )
+Milestone 2
+1. Write Grammar for ANTLR in the .g4 format.
+2. Debug and test grammar, fix the edge case issues. Research on tokenizing and generating parse trees. 
+3. Implement the compiler for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration. 
+4. Implement the runtime for basic arithmetic operator, relational operator, logical operator, conditional statements, boolean expression, iterative operator and consecutive declaration.  
+5. Bug fixes and documentation. 
 
 
-Future Works:
-* Operator precedence
-* Handling keywords in identifier
-* Support for functions
-* Console input/output or command line args to get user inputs
+
+
+
+
+
+
+
+
+Contribution:
+1. Madhu Madhavan
+* Researched on project structure, knowledge gathering and also tools that can be used. Studied about the ANTLR tool.
+* Assisted with the Grammar rules.
+* Researched on tokenizing and generating parse trees.
+* Contributed in design of intermediate code.
+* Contributed towards design of runtime framework.
+* Contributed towards implementation of runtime in python for control statements and loop statements.
+* Generated bash scripts.
+* Bug fixes and documentation.
+
+
+2. Ashwin Srinivasan
+* Researched on Language and compared the various tools that can be used for the project. Studied about the ANTLR tool.
+* Assisted with the Grammar design.
+* Contributed in adding regular expressions for grammar
+* Researched on tokenizing and generating parse trees.
+* Contributed in design of intermediate code.
+* Contributed towards design of  runtime framework.
+* Contributed towards implementation of runtime in python for declaration and expressions.
+* Bug fixes and documentation.
+
+
+3. Deepti Paul
+* Researched on Language and tools to use for the project. Gathered information on the entire project design. Studied about the ANTLR tool.
+* Contributed in Language rules.
+* Contributed in Adding regular expressions for grammar and in writing grammar in .g4 file format.
+* Researched on tokenizing and generating parse trees.
+* Involved in design of intermediate code.
+* Assisted in working with ANTLR tool for Lexer and Parser.
+* Contributed in implementing intermediate code generator for control statements and loop statements.
+* Bug fixes and documentation.
+
+
+4. Srinivasan Sundar
+* Researched on the various parsing tools to identify the best that can be implemented effectively in the project. Studied about the ANTLR tool.
+* Contributed in writing original grammar rules.
+* Debugged and tested grammar, fixing the edge case issues.
+* Contributed in writing grammar in .g4 file format.
+* Involved in design of intermediate code.
+* Assisted in working with ANTLR tool for Lexer and Parser.
+* Contributed in implementing intermediate code generator for declaration, assignment, and expressions. 
+* Bug fixes and documentation.
+
+
+Changes:
+In the grammar-
+Changed start end part in the grammar to main() → to have a keyword to indicate start of the program
+
+
+Additions:
+* Added in  initializeStatement : Identifier '=' expr 
+* Introduced operator precedence
+* Introduced left associativity
+* Introduced if loop without else part
+* Introduced line and block comment
