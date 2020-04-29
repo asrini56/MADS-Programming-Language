@@ -1,14 +1,19 @@
+"""
+ @author: Ashwin Srinivasan
+ @author: Madhu Srinivasan
+ @version: 1.0
+ @since: 20/04/2020
+ Runtime code for MADS language
+"""
 import sys
 
-codeList = []
-intList = []
-scope = []
 value_map = {}
 variable_map = {}
 iterator = 0
 expr_stack = []
 
 
+# Function to iterate code till 'end_inst'
 def iterate_code(code_list, end_inst):
     global iterator
     global value_map
@@ -22,14 +27,19 @@ def iterate_code(code_list, end_inst):
         iterator += 1
 
 
+# Main method
 def main(argv):
     file1=argv.replace(".mads",".imc")
-    file_name = open(file1, "r")
-    code_list = file_name.read().split("\n")
-    global iterator
-    iterate_code(code_list, len(code_list))
+    try:
+        file_name = open(file1, "r")
+        code_list = file_name.read().split("\n")
+        global iterator
+        iterate_code(code_list, len(code_list))
+    except:
+        pass
 
 
+# returns default value of given datatype
 def default_value(data_type):
     if data_type == "INT":
         return 0
@@ -41,6 +51,7 @@ def default_value(data_type):
         return ""
 
 
+# checks whether value belongs to 'data_type' dataType or not
 def check_data_type(data_type, value):
     if data_type == "INT":
         try:
@@ -56,8 +67,7 @@ def check_data_type(data_type, value):
             pass
     elif data_type == "BOOL":
         try:
-            bool(value.capitalize())
-            return True
+            return isinstance(value, bool)
         except:
             pass
     elif data_type == "STRING" and value.startswith("\""):
@@ -65,6 +75,7 @@ def check_data_type(data_type, value):
     return False
 
 
+# typecasts value to 'data_type' dataType
 def typecast(data_type, value):
     try:
         if data_type == "INT":
@@ -72,13 +83,14 @@ def typecast(data_type, value):
         elif data_type == "FLOAT":
             return float(value)
         elif data_type == "BOOL":
-            return bool(value.capitalize())
+            return value
         elif data_type == "STRING":
             return value
     except:
         print(f"Unable to typecast {value} to {data_type} datatype")
 
 
+# Executes declaration of variable
 def execute_declare(token):
     global variable_map
     if variable_map.get(token[2]):
@@ -88,11 +100,14 @@ def execute_declare(token):
         value_map[token[2]] = default_value(token[1])
 
 
+# Executes assignment instruction
 def execute_assign(token):
     global variable_map
     if token[1] in variable_map.keys():
         if token[2] in variable_map.keys():
             value = value_map[token[2]]
+        elif token[2] == "true" or token[2] == "false":
+            value = (token[2] == 'true')
         else:
             value = token[2]
         if check_data_type(variable_map[token[1]], value):
@@ -104,6 +119,7 @@ def execute_assign(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes print statement
 def execute_print(code_list):
     token = code_list[iterator].split(" ")
     if token[1].startswith("\""):
@@ -111,11 +127,12 @@ def execute_print(code_list):
         value = value[5:].replace('\"', '').replace('\\n', '\n')
         print(value)
     elif token[1] in variable_map.keys():
-        print(value_map[token[1]])
+        print(value_map[token[1]].replace('\"', ''))
     else:
         print(f"Undeclared variable {token[1]}")
 
 
+# Pulls token value from expr_stack
 def execute_pull(token):
     if token[1] in variable_map.keys():
         expr_stack.append(value_map[token[1]])
@@ -123,6 +140,7 @@ def execute_pull(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Stores token value to expr_stack
 def execute_store(token):
     if token[1] in variable_map.keys():
         value = expr_stack.pop()
@@ -134,6 +152,7 @@ def execute_store(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes expression statement
 def execute_expression(token):
     global expr_stack
     temp1 = expr_stack.pop()
@@ -146,12 +165,13 @@ def execute_expression(token):
     elif token[0] == 'MUL':
         result = temp2 * temp1
     elif token[0] == 'DIV':
-        result = temp2 / temp1
+        result = temp2 // temp1
     elif token[0] == 'MOD':
         result = temp2 % temp1
     expr_stack.append(result)
 
 
+# Executes condition statement
 def execute_condition(token):
     global expr_stack
     temp1 = expr_stack.pop()
@@ -175,11 +195,13 @@ def execute_condition(token):
         result = (temp2 >= temp1)
     elif token[0] == 'AND':
         result = (temp2 and temp1)
+        print(value_map)
     elif token[0] == 'OR':
         result = (temp2 or temp1)
     expr_stack.append(result)
 
 
+# Executes ternary statement
 def execute_ternary(code_list):
     global iterator
     iterator += 2
@@ -230,8 +252,10 @@ def execute_ternary(code_list):
                 end_inst = iterator
                 break
     iterate_code(code_list, end_inst)
+    iterator -= 1
     
 
+# Execute If loop
 def execute_if_loop(code_list):
     global iterator
     iterator += 2
@@ -291,6 +315,7 @@ def execute_if_loop(code_list):
     iterate_code(code_list, end_inst)
 
 
+# Execute While loop
 def execute_while_loop(code_list):
     global iterator
     iterator += 1
@@ -320,11 +345,15 @@ def execute_while_loop(code_list):
     iterator = while_end
 
 
+# Execute For loop
 def execute_for_loop(code_list):
     global iterator
     iterator += 1
     token = code_list[iterator].split(" ")
-    var_name = token[2]
+    del_var = False
+    if token[0] == 'DECL':
+        var_name = token[2]
+        del_var = True
     cndt_start = code_list.index("CNDT", iterator) + 1
     cndt_end = code_list.index("CNDTEND", iterator)
     iterate_code(code_list, cndt_end)
@@ -352,10 +381,12 @@ def execute_for_loop(code_list):
         iterate_code(code_list, cndt_end)
         cndt = expr_stack.pop()
     iterator = for_end
-    variable_map.pop(var_name)
-    value_map.pop(var_name)
+    if del_var:
+        variable_map.pop(var_name)
+        value_map.pop(var_name)
 
 
+# Gets range value
 def get_range_value(code_list):
     token = code_list[iterator].split(" ")
     if token[0] == 'PULL' and token[1] in variable_map.keys():
@@ -367,6 +398,7 @@ def get_range_value(code_list):
         return 0
 
 
+# Executes for range loop
 def execute_for_range(code_list):
     global iterator
     iterator += 1
@@ -400,6 +432,7 @@ def execute_for_range(code_list):
         value_map[var_name] = i + 1
 
 
+# Executes increment statement
 def execute_increment(token):
     global variable_map
     if token[1] in variable_map.keys():
@@ -408,6 +441,7 @@ def execute_increment(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes decrement statement
 def execute_decrement(token):
     global variable_map
     if token[1] in variable_map.keys():
@@ -416,6 +450,7 @@ def execute_decrement(token):
         print(f"Undeclared variable {token[1]}")
 
 
+# Executes intermediate code
 def execute(code_list):
     global value_map
     global variable_map

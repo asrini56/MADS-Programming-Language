@@ -1,0 +1,20 @@
+main(){
+   int n= 1001;
+   int reversedN = 0;
+   int remainder;
+   int originalN;
+   originalN = n;
+   while (n != 0) {
+       remainder = n % 10;
+       reversedN = reversedN * 10 + remainder;
+       n = n / 10;
+   }
+
+   if (originalN == reversedN){
+       print(originalN);
+       print("is a palindrome.");
+   }else{
+       print(originalN);
+       print("is not a palindrome.");
+   }
+}

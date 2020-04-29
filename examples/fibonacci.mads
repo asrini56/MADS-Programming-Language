@@ -1,0 +1,12 @@
+main(){
+    int f1 = 0;
+    int f2 = 1;
+    int f3;
+    int i;
+    for(i=1;i<=5;i++){
+        f3 = f1 + f2;
+        print(f3);
+        f1 = f2;
+        f2 = f3;
+    }
+}

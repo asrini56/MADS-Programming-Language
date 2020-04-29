@@ -11,6 +11,13 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
+/**
+ * @author Deepti Paul
+ * @author Srinivasan Sundar
+ * @since 18/04/2020
+ * @version 1.0
+ * MADParser is used to parse the tokens of a program
+ */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class MADSParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }

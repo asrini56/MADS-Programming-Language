@@ -12,6 +12,13 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
+/**
+ * @author Deepti Paul
+ * @author Srinivasan Sundar
+ * @since 18/04/2020
+ * @version 1.0
+ * MADSLexer used for lexical analysis of given program
+ */
 public class MADSLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 

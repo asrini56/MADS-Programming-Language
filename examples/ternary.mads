@@ -1,0 +1,7 @@
+main(){
+    int f1 = 2;
+    int f2 = 3;
+    int min;
+    f1 < f2 ? min = f1 : min = f2;
+    print(min);
+}
