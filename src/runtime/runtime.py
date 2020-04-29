@@ -29,7 +29,6 @@ def iterate_code(code_list, end_inst):
 
 # Main method
 def main(argv):
-    print(argv)
     file1=argv.replace(".mads",".imc")
     try:
         file_name = open(file1, "r")
