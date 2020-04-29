@@ -8,12 +8,12 @@
 
 
 ## Development Environment
+Compiler and Runtime was built on Windows and MacOS platform
 * Lexer and Parser - ANTLR 4.8
 * Compiler - Java 8
 * Runtime - Python 3
 
 ## Installation Instruction
-Compiler and Runtime was built on Windows and MacOS platform
 1. Install Python 3
 2. Install Java SE Runtime 1.8 
 3. Git clone this repository - https://github.com/Srini2305/SER502-Spring2020-Team12.git
