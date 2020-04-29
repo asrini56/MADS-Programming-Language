@@ -146,7 +146,7 @@ def execute_expression(token):
     elif token[0] == 'MUL':
         result = temp2 * temp1
     elif token[0] == 'DIV':
-        result = temp2 / temp1
+        result = temp2 // temp1
     elif token[0] == 'MOD':
         result = temp2 % temp1
     expr_stack.append(result)
