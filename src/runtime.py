@@ -276,7 +276,7 @@ def execute_if_loop(code_list):
                 end_inst = iterator
                 break
             if token[0] =='ELSE':
-                # checked = 1
+                checked = 1
                 iterator += 1
             if token[0] !='ENDIF':
                 if checked == 0:
